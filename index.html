@@ -5,6 +5,8 @@ layout: default
 <div id="wrapper">
 
     <!-- Header -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,8 +16,12 @@ layout: default
             font-family: Calibri, Arial, sans-serif;
         }
         .navbar {
-            background: #1f2224;
-	    padding: 10px 15px;
+            background: darkslategrey;
+            padding: 10px 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
         }
         .navdiv {
             display: flex;
@@ -28,11 +34,10 @@ layout: default
             text-align: left;
         }
         .logo a {
-            font-size: 30px;
+            font-size: 35px;
             font-weight: 600;
             color: white;
             text-decoration: none;
-	    border: none;
         }
         ul {
             padding: 0;
@@ -48,7 +53,11 @@ layout: default
             font-weight: bold;
             margin-right: 25px;
             text-decoration: none;
-	    border: none;
+        }
+        .main {
+            margin-top: 100px; /* Initial margin-top for footer */
+            background: lightgray;
+            padding: 20px;
         }
     </style>
 </head>
