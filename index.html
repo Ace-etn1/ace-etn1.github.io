@@ -85,7 +85,7 @@ layout: default
     <!-- Main -->
     <div id="main" data-exif='{{ site.exif }}'>
         {% for image in site.static_files %}
-        {% if image.path contains 'full' %}
+        {% if image.path contains 'compressed' %}
         <article class="thumb">
             <a href="{{ site.baseurl }}{{ site.image_fulls_loc }}/{{ image.name }}" class="image">
                 <img src="{{ site.baseurl }}{{ site.image_fulls_loc }}/{{ image.name }}" alt=""
