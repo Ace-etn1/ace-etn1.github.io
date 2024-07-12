@@ -2,8 +2,8 @@ import os
 from PIL import Image
 
 # Define source and destination directories
-source_dir = 'path/to/source/folder'
-destination_dir = 'path/to/destination/folder'
+source_dir = 'images/full'
+destination_dir = 'images/compressed'
 
 # Ensure destination directory exists
 os.makedirs(destination_dir, exist_ok=True)
@@ -17,6 +17,6 @@ for filename in os.listdir(source_dir):
             # Define the save path for the compressed image
             save_path = os.path.join(destination_dir, filename)
             # Save the image with compression (quality can be adjusted as needed)
-            img.save(save_path, optimize=True, quality=70)
+            img.save(save_path, optimize=True, quality=30)
 
 print("Images have been copied and compressed.")
