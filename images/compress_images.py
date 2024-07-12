@@ -20,3 +20,5 @@ for filename in os.listdir(source_dir):
             img.save(save_path, optimize=True, quality=30)
 
 print("Images have been copied and compressed.")
+
+#why is not syncing
