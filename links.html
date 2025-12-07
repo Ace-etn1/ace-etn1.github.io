@@ -1,0 +1,57 @@
+---
+layout: default
+---
+<!-- Wrapper -->
+<div id="wrapper">
+
+    {% include navigation.html %}
+    
+    {% include page-header.html %}
+
+    <!-- Main Content -->
+    <div id="main">
+        <section class="links-section" style="padding: 4rem 2rem; text-align: center; max-width: 800px; margin: 0 auto;">
+            <h2 style="font-size: 3.5rem; margin-bottom: 3rem; color: #ffffff; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-shadow: 2px 2px 8px rgba(0,0,0,0.5);">Useful Links</h2>
+            <div class="links-container" style="display: flex; flex-direction: column; gap: 1.5rem; align-items: center;">
+                <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" 
+                   style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                          color: white; text-decoration: none; border-radius: 8px; font-size: 1.2rem; 
+                          font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                          min-width: 200px;">
+                    <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <i class="fa fa-external-link" style="font-size: 0.9rem;"></i>
+                        Google
+                    </span>
+                </a>
+                <a href="Links - projects/jj's-interactive-christmas-tree/index.html" 
+                   style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); 
+                          color: white; text-decoration: none; border-radius: 8px; font-size: 1.2rem; 
+                          font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+                          min-width: 200px;">
+                    <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <i class="fa fa-tree" style="font-size: 0.9rem;"></i>
+                        Christmas tree
+                    </span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .links-container a:hover {
+            transform: translateY(-3px);
+        }
+        .links-container a[href="https://www.google.com"]:hover {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .links-container a[href*="christmas-tree"]:hover {
+            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.6);
+        }
+        .links-container a:active {
+            transform: translateY(-1px);
+        }
+    </style>
+
+    {% include page-footer.html %}
+</div>
+

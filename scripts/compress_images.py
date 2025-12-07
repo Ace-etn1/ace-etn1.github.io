@@ -1,9 +1,11 @@
 import os
 from PIL import Image
 
-# Define source and destination directories
-source_dir = 'c:/Users/Jeff/Desktop/Python/Website/ace-etn1.github.io/images/fulls'
-destination_dir = 'c:/Users/Jeff/Desktop/Python/Website/ace-etn1.github.io/images/compressed'
+# Define source and destination directories (relative to script location)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(script_dir)
+source_dir = os.path.join(project_root, 'images', 'fulls')
+destination_dir = os.path.join(project_root, 'images', 'compressed')
 
 # Ensure destination directory exists
 os.makedirs(destination_dir, exist_ok=True)

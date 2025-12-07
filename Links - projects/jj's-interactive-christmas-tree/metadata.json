@@ -1,0 +1,8 @@
+{
+  "name": "JJ's Interactive Christmas Tree",
+  "description": "A luxurious, interactive 3D holiday experience controlled by hand gestures.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
