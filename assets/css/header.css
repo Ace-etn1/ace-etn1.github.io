@@ -5,21 +5,24 @@
         .navbar {
             background: #1f2224;
 	    padding: 10px 15px;
-	    position: sticky;
+	    position: fixed;
 	    top: 0;
 	    left: 0;
 	    width: 100%;
-	    z-index: 1000;
+	    z-index: 10003;
         }
         .navdiv {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin: 0 auto; /* Center align horizontally */
+            flex-wrap: nowrap;
+            gap: 8px;
         }
         .logo {
-            flex: 1;
+            flex: 0 1 auto;
             text-align: left;
+            white-space: nowrap;
         }
         .logo a {
             font-size: 30px;
@@ -31,10 +34,14 @@
         ul {
             padding: 0;
             margin: 0;
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 0;
         }
         li {
             list-style: none;
             display: inline-block;
+            white-space: nowrap;
         }
         li a {
             color: white;
@@ -43,4 +50,53 @@
             margin-right: 25px;
             text-decoration: none;
 	    border: none;
+        }
+
+        /* Mobile responsive styles */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 8px 10px;
+            }
+            .navdiv {
+                gap: 4px;
+            }
+            .logo a {
+                font-size: 24px;
+            }
+            li a {
+                font-size: 21px;
+                margin-right: 12px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .navbar {
+                padding: 6px 8px;
+            }
+            .navdiv {
+                gap: 2px;
+            }
+            .logo a {
+                font-size: 21px;
+            }
+            li a {
+                font-size: 18px;
+                margin-right: 8px;
+            }
+        }
+
+        @media screen and (max-width: 360px) {
+            .navbar {
+                padding: 5px 6px;
+            }
+            .navdiv {
+                gap: 1px;
+            }
+            .logo a {
+                font-size: 18px;
+            }
+            li a {
+                font-size: 17px;
+                margin-right: 6px;
+            }
         }

@@ -1389,7 +1389,7 @@
 /* Header */
 
 	body {
-		padding: 0 0 4em 0;
+		padding: 5.5em 0 3em 0;
 	}
 
 	#header {
@@ -1405,12 +1405,13 @@
 		-ms-user-select: none;
 		-webkit-user-select: none;
 		background: #000000;
-		bottom: -1em;
-		height: 4em;
+		bottom: auto;
+		height: auto;
 		left: 0;
-		line-height: 3em;
-		padding: 0 1.5em;
+		line-height: 1.5;
+		padding: 0.35em 1.5em;
 		position: fixed;
+		top: 3.2em;
 		user-select: none;
 		width: 100%;
 		z-index: 10002;
@@ -1427,7 +1428,7 @@
 			color: #a0a0a1;
 			display: inline-block;
 			font-size: 1em;
-			line-height: 1;
+			line-height: 1.5;
 			margin: 0;
 			vertical-align: middle;
 		}
@@ -1444,7 +1445,8 @@
 		#header nav {
 			position: absolute;
 			right: 0;
-			top: 0;
+			top: 50%;
+			transform: translateY(-50%);
 		}
 
 			#header nav > ul {
@@ -1488,7 +1490,7 @@
 	@media screen and (max-width: 736px) {
 
 		body {
-			padding: 4em 0 0 0;
+			padding: 5em 0 0 0;
 		}
 
 		#header {
@@ -1497,9 +1499,9 @@
 			-ms-transform: translateY(0);
 			transform: translateY(0);
 			bottom: auto;
-			height: 4em;
-			padding: 0 1em;
-			top: 0;
+			height: auto;
+			padding: 0.25em 1em;
+			top: 2.5em;
 		}
 
 			body.loading #header {
@@ -1527,21 +1529,24 @@
 	.navbar {
 		background: #000000;
 		padding: 0.5em 1.5em;
-		position: sticky;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
-		z-index: 1000;
+		z-index: 10003;
 	}
 	.navdiv {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		margin: 0 auto; /* Center align horizontally */
+		flex-wrap: nowrap;
+		gap: 8px;
 	}
 	.logo {
-		flex: 1;
+		flex: 0 1 auto;
 		text-align: left;
+		white-space: nowrap;
 	}
 	.logo a {
 		font-size: 1.2em;
@@ -1553,10 +1558,14 @@
 	ul {
 		padding: 0;
 		margin: 0;
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 0;
 	}
 	li {
 		list-style: none;
 		display: inline-block;
+		white-space: nowrap;
 	}
 	li a {
 		color: white;
@@ -1565,6 +1574,55 @@
 		margin-right: 2em;
 		text-decoration: none;
 		border: none;
+	}
+
+	/* Mobile responsive styles for navbar */
+	@media screen and (max-width: 768px) {
+		.navbar {
+			padding: 0.4em 0.6em;
+		}
+		.navdiv {
+			gap: 4px;
+		}
+		.logo a {
+			font-size: 1.35em;
+		}
+		li a {
+			font-size: 1.275em;
+			margin-right: 0.75em;
+		}
+	}
+
+	@media screen and (max-width: 480px) {
+		.navbar {
+			padding: 0.3em 0.4em;
+		}
+		.navdiv {
+			gap: 2px;
+		}
+		.logo a {
+			font-size: 1.125em;
+		}
+		li a {
+			font-size: 1.05em;
+			margin-right: 0.5em;
+		}
+	}
+
+	@media screen and (max-width: 360px) {
+		.navbar {
+			padding: 0.25em 0.3em;
+		}
+		.navdiv {
+			gap: 1px;
+		}
+		.logo a {
+			font-size: 0.975em;
+		}
+		li a {
+			font-size: 0.9em;
+			margin-right: 0.4em;
+		}
 	}
 
 /* Main */
