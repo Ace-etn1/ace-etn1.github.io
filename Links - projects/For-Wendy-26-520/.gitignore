@@ -1,6 +1,7 @@
 node_modules/
 build/
-dist/
+# dist - commented out to allow dist folder to be committed for GitHub Pages
+# dist/
 coverage/
 .DS_Store
 *.log
