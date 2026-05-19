@@ -1,0 +1,6 @@
+{
+  "name": "Confession to Princess Wendy",
+  "description": "A romantic website dedicated to Princess Wendy for 520.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
