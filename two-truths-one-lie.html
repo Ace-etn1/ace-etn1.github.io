@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6dbefd">
+    <title>2 Truths 1 Lie · Jeff Jiang</title>
+    <link rel="preload" href="assets/fonts/Chewy-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <style>
+        @font-face { font-family: Chewy; src: url('assets/fonts/Chewy-Regular.ttf') format('truetype'); font-display: swap; }
+        :root { color-scheme: light; --blue: #6dbefd; --ink: #111210; --paper: #fffefb; }
+        * { box-sizing: border-box; }
+        html { scrollbar-gutter: stable; }
+        body { margin: 0; background: var(--blue); color: var(--ink); font-family: Arial, sans-serif; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        button { color: inherit; }
+        a:focus-visible, button:focus-visible { outline: 3px dashed var(--ink); outline-offset: 9px; }
+        .page { max-width: 1240px; margin: auto; padding: 0 36px 40px; }
+        .topbar { display: flex; width: min(1320px, 100%); min-height: 56px; margin: 0 auto; padding: 18px clamp(16px, 3vw, 32px); justify-content: space-between; align-items: center; gap: 18px; }
+        .topbar a { color: inherit; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .035em; text-decoration: none; opacity: .58; transition: opacity .2s ease; }
+        .topbar a:hover, .topbar a[aria-current="page"] { opacity: 1; }
+        .section-links { display: flex; min-width: 0; align-items: center; gap: clamp(10px, 2vw, 24px); overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+        .section-links::-webkit-scrollbar { display: none; }
+        .section-links a { flex: none; }
+        header { text-align: center; padding: 34px 0 32px; position: relative; }
+        h1 { margin: 0; font: 400 clamp(52px, 7.2vw, 90px)/.92 Chewy, cursive; letter-spacing: -.02em; }
+        h1 span { display: inline-block; }
+        .truth-title { transform: rotate(-3deg); }
+        .lie-title { position: relative; transform: rotate(3deg); margin-left: .15em; }
+        .lie-title::after { content: ''; position: absolute; left: 2%; bottom: -10px; width: 100%; height: 7px; background: var(--ink); border-radius: 40% 60% 45% 60%; transform: rotate(-4deg); }
+        .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; padding: 16px 4px 25px; }
+        .card { display: block; position: relative; width: 100%; height: 430px; padding: 0; border: 0; background: none; text-align: left; perspective: 1500px; cursor: pointer; transform: rotate(var(--lean)); transition: transform .25s; border-radius: 24px; }
+        .card:nth-child(1) { --lean: -3deg; }
+        .card:nth-child(2) { --lean: 2deg; }
+        .card:nth-child(3) { --lean: -2deg; }
+        .card:hover, .card:focus-visible { transform: translateY(-9px) rotate(0deg); }
+        .card-inner { display: block; height: 100%; position: relative; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.22,.75,.25,1); }
+        .card.is-open .card-inner { transform: rotateY(180deg); }
+        .side { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 24px; border: 3px solid var(--ink); border-radius: 22px 27px 20px 25px; background: var(--paper); box-shadow: 7px 8px 0 var(--ink); backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
+        .reverse { transform: rotateY(180deg); }
+        .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .number { font: 42px/.9 Chewy, cursive; }
+        .doodle { width: 90px; height: 90px; margin: 20px auto 10px; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+        .statement { display: block; font: 400 clamp(26px, 2.6vw, 35px)/1.1 Chewy, cursive; margin: 8px 0 12px; }
+        .tap { margin-top: auto; padding-top: 17px; border-top: 2px dashed #11121055; display: flex; align-items: center; justify-content: space-between; font: 19px Chewy, cursive; }
+        .tap b { font: 29px Chewy, cursive; }
+        .result { font: 29px Chewy, cursive; display: flex; align-items: center; gap: 9px; }
+        .result svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+        .reveal-copy { display: block; font-size: 14px; line-height: 1.5; margin: 14px 0 18px; }
+        .photo { display: block; width: 100%; height: 185px; object-fit: cover; border: 2px solid var(--ink); border-radius: 8px; background: var(--blue); transform: rotate(-2deg); }
+        .reverse .tap { font-size: 16px; border: 0; }
+        .footer { display: flex; flex-direction: column; align-items: center; gap: 15px; padding-top: 20px; text-align: center; }
+        .progress { display: flex; align-items: center; gap: 12px; font: 20px Chewy, cursive; }
+        .dots { display: inline-flex; gap: 7px; }
+        .dot { width: 11px; height: 11px; border: 2px solid var(--ink); border-radius: 50%; }
+        .dot.seen { background: var(--ink); }
+        .reset { background: transparent; border: 2px solid var(--ink); border-radius: 50px; padding: 10px 23px; font: 19px Chewy, cursive; cursor: pointer; transition: background .2s, transform .2s; }
+        .reset:hover { background: var(--paper); transform: rotate(-3deg); }
+        @media (min-width: 1500px) { header { padding: 65px 0 48px; } .card { height: 470px; } .doodle { margin-top: 32px; margin-bottom: 22px; } .photo { height: 215px; } }
+        @media (max-width: 850px) { .page { padding: 0 22px 32px; } .cards { gap: 17px; } .side { padding: 18px; } .card { height: 420px; } .statement { font-size: 27px; }  .result { font-size: 23px; } }
+        @media (max-width: 650px) { .page { max-width: 440px; padding: 0 14px 35px; } .topbar { padding: 15px 10px; gap: 10px; } .topbar a { font-size: 10px; } .section-links { gap: 9px; } header { padding: 36px 0 24px; } h1 span { display: block; } .lie-title { margin: 10px auto 0; width: max-content; } .cards { grid-template-columns: 1fr; gap: 38px; padding: 18px 10px 20px; } .card { height: 410px; } .side { padding: 24px; } .statement { font-size: 32px; } .photo { height: 180px; } .result { font-size: 29px; } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } .card:hover, .card:focus-visible { transform: rotate(var(--lean)); } }
+    </style>
+</head>
+<body>
+    <nav class="topbar" aria-label="Page navigation">
+        <a href="index.html">Home</a>
+        <div class="section-links"><a href="photography.html">Photography</a><a href="professional.html">Professional</a><a href="two-truths-one-lie.html" aria-current="page">2 Truths 1 Lie</a><a href="lets-connect.html">Connect</a><a href="links.html">Links</a></div>
+    </nav>
+    <main class="page">
+        <header>
+            <h1><span class="truth-title">2 TRUTHS.</span> <span class="lie-title">1 LIE.</span></h1>
+        </header>
+        <div class="cards" aria-label="Three story cards"></div>
+        <footer class="footer">
+            <div class="progress"><span class="dots" aria-hidden="true"><i class="dot"></i><i class="dot"></i><i class="dot"></i></span><span id="progress" role="status" aria-live="polite">0 / 3 opened</span></div>
+            <button class="reset" type="button">↺ Start again</button>
+        </footer>
+    </main>
+    <script>
+        // Add stories and image paths later. Set truth to true or false once the answers are confirmed.
+        const stories = [
+            { statement: 'I have slept in the car 2 days in a row, twice', reveal: 'Story coming soon.', truth: null, image: 'assets/images/story-placeholder.svg', alt: 'Photo placeholder' },
+            { statement: 'I own a telescope', reveal: 'Story coming soon.', truth: null, image: 'assets/images/story-placeholder.svg', alt: 'Photo placeholder' },
+            { statement: 'I am obsessed with coffee', reveal: 'Story coming soon.', truth: null, image: 'assets/images/story-placeholder.svg', alt: 'Photo placeholder' },
+        ];
+        const doodles = [
+            '<path d="M 14 56 L 23 35 Q 49 30 75 35 L 86 56 L 88 76 L 12 76 Z M 16 55 L 84 55 M 48 35 L 48 55 M 23 64 L 31 64 M 69 64 L 77 64 M 20 77 L 20 84 L 31 84 L 31 77 M 69 77 L 69 84 L 80 84 L 80 77"/><path d="M 61 19 L 72 19 L 62 27 L 73 27" stroke-width="3"/>',
+            '<path d="M 22 40 L 68 19 L 79 41 L 32 62 Z M 66 16 L 81 45 M 23 45 L 13 50 L 19 62 L 29 57 M 47 57 L 50 65 M 50 65 L 30 89 M 50 65 L 71 89 M 50 65 L 50 89"/><path d="M 85 12 L 85 22 M 80 17 L 90 17 M 13 19 L 13 25 M 10 22 L 16 22" stroke-width="3"/>',
+            '<path d="M 19 39 L 72 39 L 68 68 Q 65 81 46 81 Q 25 80 22 68 Z M 73 44 Q 92 40 88 56 Q 86 65 71 64 M 13 86 Q 47 93 80 85"/><path d="M 32 29 Q 23 23 33 13 M 49 28 Q 42 22 51 10 M 66 29 Q 59 23 68 14" stroke-width="3"/>',
+        ];
+        const container = document.querySelector('.cards');
+        const seen = new Set();
+        const progress = document.querySelector('#progress');
+        function updateProgress() {
+            progress.textContent = `${seen.size} / 3 opened`;
+            document.querySelectorAll('.dot').forEach((dot, index) => dot.classList.toggle('seen', seen.has(index)));
+        }
+        stories.forEach((story, index) => {
+            const card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'card';
+            card.setAttribute('aria-expanded', 'false');
+            card.setAttribute('aria-controls', `reveal-${index}`);
+            const result = story.truth === null ? 'The story' : story.truth ? 'True story!' : 'The lie!';
+            card.innerHTML = `<span class="card-inner"><span class="side front"><span class="card-top"><span class="number">0${index + 1}</span></span><svg class="doodle" viewBox="0 0 100 100" aria-hidden="true">${doodles[index]}</svg><span class="statement"></span><span class="tap">Flip <b aria-hidden="true">↗</b></span></span><span class="side reverse" id="reveal-${index}" aria-hidden="true"><span class="result">${result}</span><span class="reveal-copy"></span><img class="photo" width="480" height="300"><span class="tap">Flip back <b aria-hidden="true">↶</b></span></span></span>`;
+            card.querySelector('.statement').textContent = story.statement;
+            card.querySelector('.reveal-copy').textContent = story.reveal;
+            const photo = card.querySelector('img');
+            photo.src = story.image;
+            photo.alt = story.alt;
+            const front = card.querySelector('.front');
+            const reverse = card.querySelector('.reverse');
+            function setOpen(open) {
+                card.classList.toggle('is-open', open);
+                card.setAttribute('aria-expanded', String(open));
+                front.setAttribute('aria-hidden', String(open));
+                reverse.setAttribute('aria-hidden', String(!open));
+                card.setAttribute('aria-label', open ? `${result}. ${story.reveal} Turn card ${index + 1} back over.` : `Card ${index + 1}: ${story.statement} Reveal the story.`);
+            }
+            setOpen(false);
+            card.addEventListener('click', () => {
+                const open = !card.classList.contains('is-open');
+                setOpen(open);
+                if (open) seen.add(index);
+                updateProgress();
+            });
+            card.addEventListener('resetcard', () => setOpen(false));
+            container.append(card);
+        });
+        document.querySelector('.reset').addEventListener('click', () => {
+            document.querySelectorAll('.card').forEach(card => card.dispatchEvent(new Event('resetcard')));
+            seen.clear();
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
+

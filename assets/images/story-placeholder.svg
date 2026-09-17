@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300">
+  <rect width="480" height="300" fill="#6dbefd"/>
+  <g stroke="#111210" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 128 60 L 351 69 L 344 235 L 119 226 Z" fill="#fffefb"/>
+    <path d="M 144 80 L 332 87 L 326 191 L 137 184 Z" fill="#6dbefd"/>
+    <circle cx="286" cy="111" r="14" fill="#fffefb"/>
+    <path d="M 139 172 L 186 119 L 238 176 L 271 140 L 326 184 L 326 191 L 137 184 Z" fill="#fffefb"/>
+    <path d="M 93 93 L 78 86 M 104 66 L 101 49 M 369 192 L 386 188 M 368 215 L 381 224" fill="none"/>
+  </g>
+  <text x="237" y="215" text-anchor="middle" transform="rotate(2 237 215)" font-family="Arial,sans-serif" font-size="13" font-weight="bold" letter-spacing="2" fill="#111210">YOUR PHOTO HERE</text>
+</svg>

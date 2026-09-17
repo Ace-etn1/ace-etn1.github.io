@@ -1,29 +1,45 @@
----
-layout: default
----
-<!-- Wrapper -->
-<div id="wrapper">
-
-    {% include navigation.html %}
-    
-    {% include page-header.html %}
-
-    <!-- Main -->
-    <div id="main" data-exif='{{ site.exif }}'>
-        {% for image in site.static_files %}
-        {% if image.path contains 'compressed' %}
-            {% assign ext = image.extname | downcase %}
-            {% if ext == '.jpg' or ext == '.jpeg' or ext == '.png' %}
-            <article class="thumb">
-                <a href="{{ site.baseurl }}{{ site.image_fulls_loc }}/{{ image.name }}" class="image">
-                    <img src="{{ site.baseurl }}{{ site.image_fulls_loc }}/{{ image.name }}" alt=""
-                        data-name="{{ image.name }}"/>
-                </a>
-            </article>
-            {% endif %}
-        {% endif %}
-        {% endfor %}
-    </div>
-
-    {% include page-footer.html %}
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#6dbefd">
+<title>Jeff Jiang</title>
+<link rel="preload" href="assets/fonts/Chewy-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<style>
+@font-face{font-family:Chewy;src:url('assets/fonts/Chewy-Regular.ttf') format('truetype');font-display:swap}
+:root{color-scheme:light;background:#6dbefd;--blue:#6dbefd;--ink:#111210;--paper:#fffefb}*{box-sizing:border-box}body{margin:0;background:var(--blue);color:var(--ink)}
+.stage{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:24px 18px;overflow:hidden;perspective:900px}.scene{display:grid;grid-template-columns:minmax(150px,1fr) minmax(0,560px) minmax(150px,1fr);grid-template-areas:'photo hero pro' 'game hero connect';align-items:center;gap:24px clamp(24px,5vw,90px);width:min(1240px,100%)}
+.hero{grid-area:hero;display:flex;flex-direction:column;align-items:center;min-width:0}.name{cursor:pointer;z-index:2;margin:0 0 8px;font:400 clamp(44px,min(12vw,10svh),106px)/.9 Chewy,cursive;text-align:center;letter-spacing:.025em;text-transform:uppercase;user-select:none}.name-line{display:block}.name-line:first-child{transform:rotate(-6deg)}.name-line:last-child{margin-top:.08em;transform:rotate(3deg)}.name-letter{display:inline-block}.name-letter:nth-child(even){transform:translateY(-.035em) rotate(5deg)}.name-letter:nth-child(3n){transform:rotate(-7deg)}
+.portrait{width:min(560px,100%,67svh);transform:translate3d(var(--x,0),var(--y,0),0) rotateX(var(--rx,0)) rotateY(var(--ry,0));transition:transform .22s ease-out}.grab{display:block;width:100%;padding:0;border:0;background:transparent;cursor:grab;touch-action:none;transform-origin:50% 65%}.grab.is-dragging{cursor:grabbing}.grab.is-dragging .face{animation-play-state:paused}.face{position:relative;animation:float 1.85s ease-in-out infinite}.portrait img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none;mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent),linear-gradient(to bottom,transparent,#000 7%,#000 94%,transparent);mask-composite:intersect}.eyes{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.expression-brow,.expression-mouth,.laugh-eyes{display:none}[data-expression=curious] .expression-brow,[data-expression=laugh] .expression-mouth,[data-expression=surprised] .expression-mouth{display:inline}[data-expression=laugh] .laugh-eyes{display:inline}[data-expression=laugh] .pupil{opacity:0}[data-expression=surprised] .pupil>ellipse:first-child{rx:16px;ry:23px}[data-expression=surprised] .pupil>ellipse:last-child{opacity:0}.laugh-mouth,.surprised-mouth{display:none}[data-expression=laugh] .laugh-mouth,[data-expression=surprised] .surprised-mouth{display:inline}
+.me-note{width:128px;height:68px;margin:-8px 0 0 -105px;overflow:visible;pointer-events:none}.me-note text{fill:currentColor;font:25px Chewy,cursive}
+.tile{text-align:center;justify-self:center;width:100%;max-width:210px}.tile a{display:block;padding:14px 4px;color:inherit;text-decoration:none;border-radius:20px}.tile h2{margin:0 0 14px;font:400 clamp(22px,2.1vw,30px)/1.1 Chewy,cursive}.icon{display:block;width:clamp(88px,9vw,126px);height:auto;margin:auto;overflow:visible;fill:var(--paper);stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;transition:transform .26s ease}.tile a:hover .icon,.tile a:focus-visible .icon{transform:translateY(-7px) rotate(-5deg)}.photo{grid-area:photo;transform:rotate(-7deg)}.pro{grid-area:pro;transform:rotate(6deg)}.game{grid-area:game;transform:rotate(5deg)}.connect{grid-area:connect;transform:rotate(-5deg)}
+a:focus-visible,button:focus-visible,.name:focus-visible{outline:3px dashed var(--ink);outline-offset:6px}
+@keyframes float{0%,100%{transform:translateY(12px) rotate(-2.5deg)}50%{transform:translateY(-12px) rotate(2.5deg)}}
+@media(max-width:760px){.stage{padding:32px 18px 44px;overflow:auto}.scene{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:'hero hero' 'photo pro' 'game connect';gap:38px 20px}.tile h2{font-size:24px}.icon{width:96px}.portrait{width:min(560px,92vw,58svh)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.portrait{transform:none!important}}
+</style>
+</head>
+<body>
+<main class="stage" aria-label="Jeff Jiang homepage"><div class="scene">
+<div class="hero"><h1 class="name" aria-label="Jeff Jiang" tabindex="0"><span class="name-line" aria-hidden="true"><span class="name-letter">J</span><span class="name-letter">e</span><span class="name-letter">f</span><span class="name-letter">f</span></span><span class="name-line" aria-hidden="true"><span class="name-letter">J</span><span class="name-letter">i</span><span class="name-letter">a</span><span class="name-letter">n</span><span class="name-letter">g</span></span></h1>
+<div class="portrait"><button class="grab" type="button" aria-label="Play with Jeff's portrait: click for a random expression or drag and release"><div class="face"><img src="assets/images/about-logo.png" alt="Jeff's smiling illustrated portrait" width="1254" height="1254" draggable="false"><svg class="eyes" viewBox="0 0 1254 1254" aria-hidden="true"><defs><radialGradient id="eye-paper"><stop offset="85%" stop-color="#fefefe"/><stop offset="100%" stop-color="#fefefe" stop-opacity="0"/></radialGradient></defs>
+<g class="eye" transform="translate(494 749) rotate(-14)"><ellipse rx="77" ry="53" fill="url(#eye-paper)"/><g class="pupil"><ellipse rx="23" ry="30" fill="#111210"/><ellipse cx="-7" cy="-10" rx="6" ry="7" fill="#fff"/></g><path class="laugh-eyes" d="M-34 7Q0-35 34 7" fill="none" stroke="#111210" stroke-width="13" stroke-linecap="round"/></g>
+<g class="eye" transform="translate(744 687) rotate(-24)"><ellipse rx="78" ry="54" fill="url(#eye-paper)"/><g class="pupil"><ellipse rx="23" ry="30" fill="#111210"/><ellipse cx="-7" cy="-10" rx="6" ry="7" fill="#fff"/></g><path class="laugh-eyes" d="M-34 7Q0-35 34 7" fill="none" stroke="#111210" stroke-width="13" stroke-linecap="round"/></g>
+<g class="expression-brow"><path d="M620 612Q618 554 691 539Q754 524 784 549L790 585Q706 580 636 627Z" fill="#fefefe"/><path d="M642 564Q692 512 757 532" fill="none" stroke="#111210" stroke-width="24" stroke-linecap="round"/></g>
+<g class="expression-mouth"><path d="M477 930Q492 891 568 886Q677 880 749 836Q821 792 857 849Q909 955 822 1059Q746 1120 640 1106Q522 1083 477 930Z" fill="#fefefe"/><g class="laugh-mouth" transform="translate(689 964) rotate(-23)"><path d="M-136-54Q0-12 136-54Q133 110 0 115Q-126 106-136-54Z" fill="#111210"/><path d="M-115-32Q0 1 115-32L103-4Q0 24-102-4Z" fill="#fff"/><path d="M-63 81Q-25 43 5 68Q41 40 76 78Q8 126-63 81Z" fill="#ef8fa1"/></g><ellipse class="surprised-mouth" cx="690" cy="974" rx="52" ry="72" transform="rotate(-23 690 974)" fill="#111210"/></g></svg></div></button></div>
+<svg class="me-note" viewBox="0 0 128 68" aria-hidden="true"><text x="5" y="53" transform="rotate(-9 5 53)">me</text><path d="M43 45Q89 56 105 5M87 15L106 3L111 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<section class="tile photo"><a href="photography.html"><h2>Photography</h2><svg class="icon" viewBox="0 0 140 140" aria-hidden="true"><path d="M18 48Q20 39 31 39H48L57 26H91L100 39H119Q132 39 132 51V113Q132 123 121 123H29Q18 123 18 113Z"/><circle cx="75" cy="81" r="29"/><circle cx="75" cy="81" r="14" fill="#6dbefd"/><path d="M30 55H43M111 55H121M62 23H87M112 18V8M123 23L131 17" fill="none"/></svg></a></section>
+<section class="tile pro"><a href="professional.html"><h2>Professional</h2><svg class="icon" viewBox="0 0 140 140" aria-hidden="true"><path d="M48 42L49 27Q69 20 90 27L92 43" fill="none" stroke-width="7"/><path d="M17 43Q66 38 123 43L122 116Q69 124 19 116Z"/><path d="M18 46L20 75Q67 94 121 73L123 44" fill="none"/><path d="M62 75H78L77 94H63Z" fill="#111210"/></svg></a></section>
+<section class="tile game"><a href="two-truths-one-lie.html"><h2>2 Truths 1 Lie</h2><svg class="icon" viewBox="0 0 140 140" aria-hidden="true"><g transform="rotate(-14 40 75)"><path d="M9 39L54 38L56 114L10 115Z"/><path d="M20 76L29 85L44 65" fill="none"/></g><g transform="rotate(13 103 75)"><path d="M81 38L127 40L128 114L82 115Z"/><path d="M92 76L101 85L117 65" fill="none"/></g><path d="M45 29Q67 25 94 29L96 118L44 118Z"/><path d="M59 59Q60 43 76 47Q92 56 74 68Q69 72 70 79M70 94V96" fill="none" stroke-width="7"/></svg></a></section>
+<section class="tile connect"><a href="lets-connect.html"><h2>Let's Connect</h2><svg class="icon" viewBox="0 0 140 140" aria-hidden="true"><path d="M105 59Q134 54 129 78Q126 97 103 91" fill="none" stroke-width="7"/><path d="M25 55Q63 51 108 55L103 96Q97 112 66 113Q36 111 30 96Z"/><path d="M27 59Q64 71 106 59M16 120Q68 132 121 119M45 40Q31 31 44 20Q51 13 44 8M68 39Q56 30 70 19M91 39Q80 29 93 16" fill="none"/><path d="M53 81Q58 74 66 82Q74 74 79 81Q85 90 66 102Q48 91 53 81Z" fill="#111210"/></svg></a></section>
+</div></main>
+<script>
+const portrait=document.querySelector('.portrait'),grab=document.querySelector('.grab'),reduced=matchMedia('(prefers-reduced-motion:reduce)'),letters=[...document.querySelectorAll('.name-letter')];let letterAnimations=[];
+function bounceName(){if(reduced.matches)return;letterAnimations.forEach(a=>a.cancel());letterAnimations=letters.map((el,i)=>el.animate([{translate:'0 0',scale:'1'},{translate:'0 -.25em',scale:'1.08 .94',offset:.35},{translate:'0 .04em',scale:'.96 1.06',offset:.72},{translate:'0 0',scale:'1'}],{duration:520,delay:i*65,easing:'cubic-bezier(.22,.7,.3,1)'}))}document.querySelector('.name').addEventListener('pointerenter',bounceName);document.querySelector('.name').addEventListener('focus',bounceName);
+let expressionTimer,lastExpression='';function randomExpression(){clearTimeout(expressionTimer);const choices=['curious','laugh','surprised'].filter(x=>x!==lastExpression);lastExpression=choices[Math.floor(Math.random()*choices.length)];grab.dataset.expression=lastExpression;expressionTimer=setTimeout(()=>delete grab.dataset.expression,1500)}
+let drag=null,spring=null,suppress=false;function springBack(x,y){spring?.cancel();grab.style.transform='';if(reduced.matches)return;spring=grab.animate([{transform:`translate(${x}px,${y}px) rotate(${x*.12}deg)`},{transform:`translate(${-x*.32}px,${-y*.32}px) rotate(${-x*.05}deg)`,offset:.32},{transform:`translate(${x*.14}px,${y*.14}px)`,offset:.6},{transform:'none'}],{duration:850,easing:'ease-in-out'})}grab.addEventListener('pointerdown',e=>{if(!e.isPrimary||e.button!==0)return;spring?.cancel();suppress=false;drag={id:e.pointerId,sx:e.clientX,sy:e.clientY,x:0,y:0,moved:false};grab.setPointerCapture(e.pointerId);grab.classList.add('is-dragging')});grab.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy,limit=Math.min(85,grab.offsetWidth*.18);drag.moved||=Math.hypot(dx,dy)>7;drag.x=limit*Math.tanh(dx/limit);drag.y=limit*Math.tanh(dy/limit);grab.style.transform=`translate(${drag.x}px,${drag.y}px) rotate(${drag.x*.12}deg)`});function endDrag(e){if(!drag||(e?.pointerId!==undefined&&e.pointerId!==drag.id))return;const d=drag;drag=null;suppress=d.moved||e?.type!=='pointerup';grab.classList.remove('is-dragging');springBack(d.x,d.y)}grab.addEventListener('pointerup',endDrag);grab.addEventListener('pointercancel',endDrag);grab.addEventListener('click',e=>{if(suppress&&e.detail!==0){suppress=false;return}randomExpression()});
+const eyes=[...document.querySelectorAll('.eye')].map(el=>({el,pupil:el.querySelector('.pupil'),x:0,y:0}));let pointer,frame=0,last=0;function follow(t){const smoothing=1-Math.exp(-Math.min(t-last||16,64)/65);last=t;for(const eye of eyes){const matrix=eye.el.getScreenCTM();if(!matrix)continue;const local=pointer.matrixTransform(matrix.inverse()),angle=Math.atan2(local.y,local.x),reach=Math.min(1,Math.hypot(local.x,local.y)/200);eye.x+=(Math.cos(angle)*28*reach-eye.x)*smoothing;eye.y+=(Math.sin(angle)*15*reach-eye.y)*smoothing;eye.pupil.setAttribute('transform',`translate(${eye.x} ${eye.y})`)}frame=requestAnimationFrame(follow)}window.addEventListener('pointermove',e=>{if(reduced.matches||e.pointerType==='touch')return;pointer=new DOMPoint(e.clientX,e.clientY);if(!frame)frame=requestAnimationFrame(follow);const x=Math.max(-1,Math.min(1,e.clientX/innerWidth*2-1)),y=Math.max(-1,Math.min(1,e.clientY/innerHeight*2-1));portrait.style.setProperty('--x',`${x*12}px`);portrait.style.setProperty('--y',`${y*10}px`);portrait.style.setProperty('--rx',`${-y*9}deg`);portrait.style.setProperty('--ry',`${x*12}deg`)},{passive:true});
+</script>
+</body></html>

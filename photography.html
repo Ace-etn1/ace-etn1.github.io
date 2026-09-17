@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6dbefd">
+    <title>Photography · Jeff Jiang</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --blue: #6dbefd;
+            --ink: #101820;
+            --frame: #202225;
+        }
+
+        * { box-sizing: border-box; }
+        html { scrollbar-gutter: stable; }
+
+        body {
+            margin: 0;
+            min-width: 320px;
+            background: var(--blue);
+            color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        button, a { -webkit-tap-highlight-color: transparent; }
+
+        .page {
+            width: min(1600px, 100%);
+            margin: 0 auto;
+            padding: 0 clamp(10px, 1.4vw, 22px) 28px;
+        }
+
+        .topbar {
+            display: flex;
+            width: min(1320px, 100%);
+            min-height: 56px;
+            margin: 0 auto;
+            padding: 18px clamp(16px, 3vw, 32px);
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .topbar a {
+            color: var(--ink);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .035em;
+            text-decoration: none;
+            opacity: .58;
+            transition: opacity .2s ease;
+        }
+        .topbar a:hover, .topbar a[aria-current="page"] { opacity: 1; }
+        .section-links { display: flex; min-width: 0; align-items: center; gap: clamp(10px, 2vw, 24px); overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+        .section-links::-webkit-scrollbar { display: none; }
+        .section-links a { flex: none; }
+
+        .gallery { margin-top: 14px; }
+
+        .gallery {
+            columns: 4 250px;
+            column-gap: clamp(7px, .8vw, 12px);
+        }
+
+        .photo {
+            display: block;
+            width: 100%;
+            margin: 0 0 clamp(7px, .8vw, 12px);
+            padding: 4px;
+            border: 1px solid #303236;
+            border-radius: 9px;
+            background: var(--frame);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .22);
+            cursor: zoom-in;
+            break-inside: avoid;
+            overflow: hidden;
+        }
+
+        .photo img {
+            display: block;
+            width: 100%;
+            height: auto;
+            min-height: 140px;
+            border-radius: 5px;
+            object-fit: cover;
+            transition: transform .4s cubic-bezier(.2, .7, .2, 1), filter .3s ease;
+        }
+
+        .photo:hover img,
+        .photo:focus-visible img {
+            transform: scale(1.012);
+            filter: brightness(1.05);
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--ink);
+            outline-offset: 3px;
+        }
+
+        dialog {
+            width: 100vw;
+            max-width: none;
+            height: 100svh;
+            max-height: none;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, .76);
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            padding: 50px;
+            place-items: center;
+        }
+
+        .preview-shell {
+            position: relative;
+            display: inline-grid;
+            max-width: calc(100vw - 100px);
+            max-height: calc(100svh - 100px);
+            padding: 10px;
+            border-radius: 4px;
+            place-items: center;
+            background: rgba(31, 34, 36, .96);
+            box-shadow: 0 1em 3em .5em rgba(0, 0, 0, .38);
+        }
+
+        .preview-shell img {
+            display: block;
+            max-width: min(82vw, 1180px);
+            max-height: calc(100svh - 120px);
+            object-fit: contain;
+        }
+
+        .close,
+        .nav-button {
+            position: absolute;
+            z-index: 2;
+            display: grid;
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            border: 0;
+            place-items: center;
+            background: rgba(14, 14, 14, .42);
+            color: white;
+            font: 300 32px/1 Arial, sans-serif;
+            cursor: pointer;
+            opacity: .62;
+            transition: opacity .2s ease, background .2s ease;
+        }
+
+        .close:hover,
+        .nav-button:hover {
+            background: rgba(0, 0, 0, .7);
+            opacity: 1;
+        }
+
+        .close { top: 10px; right: 10px; }
+        .nav-button { top: 50%; height: 84px; transform: translateY(-50%); }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        @media (max-width: 720px) {
+            .page { padding: 12px 7px 20px; }
+            .topbar { padding: 15px 10px; gap: 10px; }
+            .topbar a { font-size: 10px; }
+            .section-links { gap: 9px; }
+            .gallery { columns: 2 140px; column-gap: 6px; margin-top: 12px; }
+            .photo { margin-bottom: 6px; padding: 3px; border-radius: 7px; }
+            .photo img { min-height: 86px; border-radius: 4px; }
+            .lightbox { padding: 16px; }
+            .preview-shell {
+                max-width: calc(100vw - 24px);
+                max-height: calc(100svh - 70px);
+                padding: 6px;
+            }
+            .preview-shell img {
+                max-width: calc(100vw - 36px);
+                max-height: calc(100svh - 82px);
+            }
+            .close { top: 6px; right: 6px; }
+            .nav-button { height: 68px; }
+            .prev { left: 6px; }
+            .next { right: 6px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="topbar" aria-label="Page navigation">
+        <a href="index.html">Home</a>
+        <div class="section-links"><a href="photography.html" aria-current="page">Photography</a><a href="professional.html">Professional</a><a href="two-truths-one-lie.html">2 Truths 1 Lie</a><a href="lets-connect.html">Connect</a><a href="links.html">Links</a></div>
+    </nav>
+    <main class="page">
+        <section class="gallery" aria-label="Jeff Jiang photography gallery"></section>
+    </main>
+
+    <dialog aria-label="Photo viewer">
+        <div class="lightbox">
+            <div class="preview-shell">
+                <button class="close" type="button" aria-label="Close photo">×</button>
+                <button class="nav-button prev" type="button" aria-label="Previous photo">‹</button>
+                <img alt="">
+                <button class="nav-button next" type="button" aria-label="Next photo">›</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        const files = [
+            '20240324_211430.jpg',
+            '20240514_144600.jpg',
+            '20240519_003313.jpg',
+            '20240519_004242.jpg',
+            '20240609_192549.jpg',
+            '20240625_020658_DSC03059.JPG',
+            '20240625_032426_DSC03097.JPG',
+            'DSC00010.JPG',
+            'DSC00835.JPG',
+            'DSC02986.JPG',
+            'DSC08327.JPG',
+            'DSC08547.JPG',
+            'DSC08567.JPG',
+            'DSC09054_1.JPG',
+            'DSC09332.JPG',
+            'DSC09832.JPG',
+            'DSC09936.JPG',
+            'DSC09962.JPG'
+        ];
+
+        const gallery = document.querySelector('.gallery');
+        const dialog = document.querySelector('dialog');
+        const viewer = dialog.querySelector('img');
+        let current = 0;
+
+        files.forEach((file, index) => {
+            const button = document.createElement('button');
+            button.className = 'photo';
+            button.type = 'button';
+            button.setAttribute('aria-label', `Open photograph ${index + 1}`);
+            button.innerHTML = `<img loading="lazy" decoding="async" src="images/compressed/${encodeURIComponent(file)}" alt="Jeff Jiang photograph ${index + 1}">`;
+            button.addEventListener('click', () => openPhoto(index));
+            gallery.append(button);
+        });
+
+        function openPhoto(index) {
+            current = (index + files.length) % files.length;
+            viewer.src = `images/fulls/${encodeURIComponent(files[current])}`;
+            viewer.alt = `Jeff Jiang photograph ${current + 1}`;
+            if (!dialog.open) dialog.showModal();
+        }
+
+        dialog.querySelector('.close').addEventListener('click', () => dialog.close());
+        dialog.querySelector('.prev').addEventListener('click', () => openPhoto(current - 1));
+        dialog.querySelector('.next').addEventListener('click', () => openPhoto(current + 1));
+        dialog.addEventListener('click', event => {
+            if (event.target === dialog || event.target.classList.contains('lightbox')) dialog.close();
+        });
+        document.addEventListener('keydown', event => {
+            if (!dialog.open) return;
+            if (event.key === 'ArrowLeft') openPhoto(current - 1);
+            if (event.key === 'ArrowRight') openPhoto(current + 1);
+        });
+    </script>
+</body>
+</html>

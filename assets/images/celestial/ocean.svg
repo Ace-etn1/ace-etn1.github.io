@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+    <defs>
+    <clipPath id="disc"><circle cx="256" cy="256" r="194"/></clipPath>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".025 .045" numOctaves="5" seed="12"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".34"/></feComponentTransfer>
+    </filter>
+    <filter id="weather" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency=".014 .022" numOctaves="3" seed="14" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="33" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+    <linearGradient id="night" x1="0" y1=".2" x2="1" y2=".75">
+      <stop stop-color="#fff8e9" stop-opacity=".2"/><stop offset=".38" stop-color="#06111b" stop-opacity="0"/>
+      <stop offset=".64" stop-color="#050a14" stop-opacity=".2"/><stop offset=".82" stop-color="#030711" stop-opacity=".78"/>
+      <stop offset="1" stop-color="#02050c" stop-opacity=".97"/>
+    </linearGradient>
+    <radialGradient id="limb" cx=".43" cy=".4" r=".6">
+      <stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset=".91" stop-color="#000914" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#000714" stop-opacity=".65"/>
+    </radialGradient>
+    <radialGradient id="air"><stop offset=".925" stop-color="#91cae6" stop-opacity="0"/>
+      <stop offset=".972" stop-color="#8db8ce" stop-opacity=".26"/><stop offset="1" stop-color="#8cb4c8" stop-opacity="0"/></radialGradient>
+    </defs>
+    <circle cx="256" cy="256" r="201" fill="url(#air)"/>
+    <g clip-path="url(#disc)"><circle cx="256" cy="256" r="194" fill="#275c81"/>
+    <g filter="url(#weather)">
+    <path fill="#78816a" d="M84 121L132 92 170 111 178 155 213 173 204 205 229 226 202 263 174 252 167 218 133 214 116 174 89 161Z M206 256L248 271 267 304 246 341 238 379 211 407 197 363 204 328 185 295Z M308 87L394 111 433 151 417 180 380 183 362 224 338 217 319 180 283 174 285 142Z M334 229L373 243 396 294 376 348 349 344 320 296Z"/>
+    <path fill="#c6b08a" opacity=".7" d="M329 225L365 236 382 262 359 278 331 258Z M142 140L169 135 182 169 157 180Z"/>
+    <g fill="none" stroke="#f2f6f3" stroke-linecap="round">
+    <path stroke-width="12" opacity=".66" d="M76 185Q165 128 257 158T442 206M80 337Q187 359 257 318T440 289"/>
+    <path stroke-width="5" opacity=".82" d="M97 196Q169 149 247 177T434 223M101 355Q169 380 223 351M278 282Q341 216 403 249"/>
+    <path stroke-width="17" opacity=".55" d="M95 100Q229 63 375 103M148 426Q255 459 365 417"/>
+    <path stroke-width="4" opacity=".7" d="M217 212C281 161 312 248 273 260C244 269 232 230 265 225"/>
+    </g></g><rect x="50" y="50" width="412" height="412" filter="url(#grain)" style="mix-blend-mode:soft-light"/>
+    <circle cx="256" cy="256" r="194" fill="url(#night)"/>
+    <circle cx="256" cy="256" r="194" fill="url(#limb)"/></g></svg>

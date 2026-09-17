@@ -1,79 +1,56 @@
----
-layout: default
-show_best_podcast: true
-show_christmas_tree: true
-show_gift_for_wendy: false
----
-<!-- Wrapper -->
-<div id="wrapper">
-
-    {% include navigation.html %}
-    
-    {% include page-header.html %}
-
-    <!-- Main Content -->
-    <div id="main">
-        <section class="links-section" style="padding: 4rem 2rem; text-align: center; max-width: 800px; margin: 0 auto;">
-            <h2 style="font-size: 3.5rem; margin-bottom: 3rem; color: #ffffff; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-shadow: 2px 2px 8px rgba(0,0,0,0.5);">Useful Links</h2>
-            <div class="links-container" style="display: flex; flex-direction: column; gap: 1.5rem; align-items: center;">
-                {% if page.show_best_podcast %}
-                <a href="https://www.acquired.fm" target="_blank" rel="noopener noreferrer" 
-                   style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                          color: white; text-decoration: none; border-radius: 8px; font-size: 1.2rem; 
-                          font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-                          min-width: 200px;">
-                    <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                        <i class="fa fa-podcast" style="font-size: 0.9rem;"></i>
-                        Best Podcast
-                    </span>
-                </a>
-                {% endif %}
-                {% if page.show_christmas_tree %}
-                <a href="Links%20-%20projects/Christmas-tree/dist/index.html" 
-                   style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); 
-                          color: white; text-decoration: none; border-radius: 8px; font-size: 1.2rem; 
-                          font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
-                          min-width: 200px;">
-                    <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                        <i class="fa fa-tree" style="font-size: 0.9rem;"></i>
-                        Christmas tree
-                    </span>
-                </a>
-                {% endif %}
-                {% if page.show_gift_for_wendy %}
-                <a href="Links%20-%20projects/For-Wendy-26-520/dist/index.html" 
-                   style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
-                          color: white; text-decoration: none; border-radius: 8px; font-size: 1.2rem; 
-                          font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
-                          min-width: 200px;">
-                    <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                        <i class="fa fa-gift" style="font-size: 0.9rem;"></i>
-                        Gift for Wendy
-                    </span>
-                </a>
-                {% endif %}
-            </div>
-        </section>
-    </div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6dbefd">
+    <title>Links · Jeff Jiang</title>
+    <link rel="preload" href="assets/fonts/Chewy-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <style>
-        .links-container a:hover {
-            transform: translateY(-3px);
+        @font-face { font-family: Chewy; src: url('assets/fonts/Chewy-Regular.ttf') format('truetype'); font-display: swap; }
+        :root { color-scheme: light; --blue: #6dbefd; --ink: #111210; --paper: #fffefb; --yellow: #ffe45c; }
+        * { box-sizing: border-box; }
+        html { scrollbar-gutter: stable; }
+        body { margin: 0; min-width: 320px; min-height: 100svh; background: var(--blue); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+        .topbar { display: flex; width: min(1320px, 100%); min-height: 56px; margin: 0 auto; padding: 18px clamp(16px, 3vw, 32px); align-items: center; justify-content: space-between; gap: 18px; }
+        .topbar a { color: inherit; font-size: 12px; font-weight: 600; letter-spacing: .035em; text-decoration: none; opacity: .58; transition: opacity .2s ease; }
+        .topbar a:hover, .topbar a[aria-current="page"] { opacity: 1; }
+        .section-links { display: flex; min-width: 0; align-items: center; gap: clamp(10px, 2vw, 24px); overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+        .section-links::-webkit-scrollbar { display: none; }
+        .section-links a { flex: none; }
+        .links-stage { width: min(960px, 100%); margin: 0 auto; padding: clamp(48px, 8vw, 105px) clamp(20px, 5vw, 60px) 80px; }
+        h1 { margin: 0 0 50px; font: 400 clamp(68px, 11vw, 116px)/.82 Chewy, cursive; letter-spacing: -.02em; text-transform: uppercase; transform: rotate(-3deg); }
+        .link-grid { display: grid; max-width: 700px; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .link-card { position: relative; min-height: 205px; padding: 25px; border: 3px solid var(--ink); border-radius: 21px 26px 20px 24px; background: var(--paper); box-shadow: 6px 7px 0 var(--ink); color: inherit; text-decoration: none; transform: rotate(var(--tilt)); transition: transform .22s ease, background .22s ease; }
+        .link-card:nth-child(1) { --tilt: -2deg; }
+        .link-card:nth-child(2) { --tilt: 1.5deg; }
+        .link-card:hover { z-index: 1; background: var(--yellow); transform: translateY(-7px) rotate(0); }
+        .number { display: block; margin-bottom: 48px; font: 28px Chewy, cursive; opacity: .58; }
+        .link-card h2 { margin: 0; font: 31px/1 Chewy, cursive; }
+        .arrow { position: absolute; right: 20px; bottom: 16px; font: 30px Chewy, cursive; }
+        a:focus-visible { outline: 3px dashed var(--ink); outline-offset: 5px; }
+        @media (max-width: 720px) {
+            .topbar { padding: 15px 10px; gap: 10px; }
+            .topbar a { font-size: 10px; }
+            .section-links { gap: 9px; }
+            .link-grid { grid-template-columns: 1fr; gap: 25px; }
+            .link-card { min-height: 190px; }
+            .number { margin-bottom: 25px; }
         }
-        .links-container a[href="https://www.google.com"]:hover {
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-        .links-container a[href*="christmas-tree"]:hover {
-            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.6);
-        }
-        .links-container a[href*="gift-for-wendy"]:hover {
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
-        }
-        .links-container a:active {
-            transform: translateY(-1px);
-        }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
     </style>
-
-    {% include page-footer.html %}
-</div>
-
+</head>
+<body>
+    <nav class="topbar" aria-label="Page navigation">
+        <a href="index.html">Home</a>
+        <div class="section-links"><a href="photography.html">Photography</a><a href="professional.html">Professional</a><a href="two-truths-one-lie.html">2 Truths 1 Lie</a><a href="lets-connect.html">Connect</a><a href="links.html" aria-current="page">Links</a></div>
+    </nav>
+    <main class="links-stage">
+        <h1>Links</h1>
+        <div class="link-grid">
+            <a class="link-card" href="https://www.acquired.fm" target="_blank" rel="noopener noreferrer"><span class="number">01</span><h2>Best Podcast</h2><span class="arrow" aria-hidden="true">↗</span></a>
+            <a class="link-card" href="Links%20-%20projects/Christmas-tree/dist/index.html"><span class="number">02</span><h2>Christmas Tree</h2><span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+    </main>
+</body>
+</html>
