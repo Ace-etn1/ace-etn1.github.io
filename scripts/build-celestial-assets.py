@@ -11,16 +11,16 @@ def planet(name, base, terrain, seed, ring=False):
     <filter id="grain" x="0" y="0" width="100%" height="100%">
       <feTurbulence type="fractalNoise" baseFrequency=".025 .045" numOctaves="5" seed="{seed}"/>
       <feColorMatrix type="saturate" values="0"/>
-      <feComponentTransfer><feFuncA type="linear" slope=".34"/></feComponentTransfer>
+      <feComponentTransfer><feFuncA type="linear" slope=".1"/></feComponentTransfer>
     </filter>
     <filter id="weather" x="-30%" y="-30%" width="160%" height="160%">
       <feTurbulence type="fractalNoise" baseFrequency=".014 .022" numOctaves="3" seed="{seed+2}" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="33" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="1.2"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
     <linearGradient id="night" x1="0" y1=".2" x2="1" y2=".75">
-      <stop stop-color="#fff8e9" stop-opacity=".2"/><stop offset=".38" stop-color="#06111b" stop-opacity="0"/>
-      <stop offset=".64" stop-color="#050a14" stop-opacity=".2"/><stop offset=".82" stop-color="#030711" stop-opacity=".78"/>
-      <stop offset="1" stop-color="#02050c" stop-opacity=".97"/>
+      <stop stop-color="#fff8e9" stop-opacity=".12"/><stop offset=".52" stop-color="#06111b" stop-opacity="0"/>
+      <stop offset=".7" stop-color="#071525" stop-opacity=".08"/><stop offset=".72" stop-color="#071525" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#02050c" stop-opacity=".76"/>
     </linearGradient>
     <radialGradient id="limb" cx=".43" cy=".4" r=".6">
       <stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset=".91" stop-color="#000914" stop-opacity=".25"/>
@@ -41,7 +41,9 @@ def planet(name, base, terrain, seed, ring=False):
     <g clip-path="url(#disc)"><circle cx="256" cy="256" r="{radius}" fill="{base}"/>
     {terrain}<rect x="50" y="50" width="412" height="412" filter="url(#grain)" style="mix-blend-mode:soft-light"/>
     <circle cx="256" cy="256" r="{radius}" fill="url(#night)"/>
-    <circle cx="256" cy="256" r="{radius}" fill="url(#limb)"/></g>{ring_front}</svg>'''
+    <circle cx="256" cy="256" r="{radius}" fill="url(#limb)"/>
+    <ellipse cx="{205 if ring else 190}" cy="{185 if ring else 172}" rx="{54 if ring else 70}" ry="{24 if ring else 30}" fill="#fff" opacity=".16" transform="rotate(-27 190 172)"/></g>
+    <circle cx="256" cy="256" r="{radius}" fill="none" stroke="#102638" stroke-width="9" opacity=".9"/>{ring_front}</svg>'''
     (DEST / f'{name}.svg').write_text(svg, encoding='utf-8')
 
 earth = '''<g filter="url(#weather)">

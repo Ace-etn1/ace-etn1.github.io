@@ -44,10 +44,20 @@
         .orbit-system { --orbit-radius: clamp(100px, calc(50cqi - 72px), 155px); position: absolute; z-index: 1; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; animation: orbit-system var(--orbit-duration) linear infinite; animation-direction: var(--orbit-direction); }
         .orbit-system::before { position: absolute; left: 0; top: 0; width: calc(var(--orbit-radius) * 2); height: calc(var(--orbit-radius) * 2); border: 1px solid rgba(67, 99, 120, .17); border-radius: 50%; content: ""; transform: translate(-50%, -50%); box-shadow: inset 0 0 24px rgba(71, 116, 145, .025); }
         .moon-slot { --angle: 0deg; --counter-angle: 0deg; position: absolute; left: 0; top: 0; width: 0; height: 0; transform: rotate(var(--angle)) translateX(var(--orbit-radius)); }
-        .moon-slot:nth-child(2) { --angle: 72deg; --counter-angle: -72deg; }
-        .moon-slot:nth-child(3) { --angle: 144deg; --counter-angle: -144deg; }
-        .moon-slot:nth-child(4) { --angle: 216deg; --counter-angle: -216deg; }
-        .moon-slot:nth-child(5) { --angle: 288deg; --counter-angle: -288deg; }
+        .orbit-system.three .moon-slot:nth-child(2) { --angle: 120deg; --counter-angle: -120deg; }
+        .orbit-system.three .moon-slot:nth-child(3) { --angle: 240deg; --counter-angle: -240deg; }
+        .orbit-system.four .moon-slot:nth-child(2) { --angle: 90deg; --counter-angle: -90deg; }
+        .orbit-system.four .moon-slot:nth-child(3) { --angle: 180deg; --counter-angle: -180deg; }
+        .orbit-system.four .moon-slot:nth-child(4) { --angle: 270deg; --counter-angle: -270deg; }
+        .orbit-system.five .moon-slot:nth-child(2) { --angle: 72deg; --counter-angle: -72deg; }
+        .orbit-system.five .moon-slot:nth-child(3) { --angle: 144deg; --counter-angle: -144deg; }
+        .orbit-system.five .moon-slot:nth-child(4) { --angle: 216deg; --counter-angle: -216deg; }
+        .orbit-system.five .moon-slot:nth-child(5) { --angle: 288deg; --counter-angle: -288deg; }
+        .orbit-system.six .moon-slot:nth-child(2) { --angle: 60deg; --counter-angle: -60deg; }
+        .orbit-system.six .moon-slot:nth-child(3) { --angle: 120deg; --counter-angle: -120deg; }
+        .orbit-system.six .moon-slot:nth-child(4) { --angle: 180deg; --counter-angle: -180deg; }
+        .orbit-system.six .moon-slot:nth-child(5) { --angle: 240deg; --counter-angle: -240deg; }
+        .orbit-system.six .moon-slot:nth-child(6) { --angle: 300deg; --counter-angle: -300deg; }
         .domain { position: absolute; z-index: 3; left: 50%; top: 50%; display: grid; width: 142px; height: 142px; padding: 0; border: 0; border-radius: 50%; place-items: center; background: transparent; color: #fff; font-family: inherit; font-size: 17px; font-weight: 650; line-height: 1.15; letter-spacing: -.02em; text-align: center; cursor: pointer; transform: translate(-50%, -50%); transition: scale .3s; }
         .planet-surface { position: absolute; inset: -16%; background: url('assets/images/celestial/ocean.svg') center / contain no-repeat; pointer-events: none; filter: drop-shadow(4px 10px 10px rgba(20, 39, 53, .18)); transition: filter .3s; }
         .domain-label { position: relative; display: block; max-width: 115px; padding: 22px 3px 0; text-shadow: 0 1px 3px #071521, 0 2px 12px #071521, 0 0 20px rgba(7,21,33,.8); }
@@ -56,13 +66,12 @@
         .skill-cluster:nth-child(4) .planet-surface { background-image: url('assets/images/celestial/ice.svg'); }
         .skill-cluster:hover .domain, .skill-cluster.is-active .domain { scale: 1.025; }
         .skill-cluster:hover .planet-surface, .skill-cluster.is-active .planet-surface { filter: drop-shadow(4px 12px 14px rgba(20, 39, 53, .26)); }
-        .satellite { position: absolute; left: 0; top: 0; display: flex; width: 132px; align-items: center; justify-content: center; gap: 7px; color: #536979; font-size: 11px; line-height: 1.18; opacity: .84; text-align: center; text-shadow: 0 1px rgba(255,255,255,.8); transform: translate(-50%, -50%) rotate(var(--counter-angle)); animation: orbit-label var(--orbit-duration) linear infinite; animation-direction: var(--orbit-direction); transition: color .25s, opacity .25s; }
+        .satellite { position: absolute; left: 0; top: 0; display: flex; width: 138px; align-items: center; justify-content: center; gap: 7px; color: #314b5d; font-size: 13px; font-weight: 680; line-height: 1.18; opacity: .9; text-align: center; text-shadow: 0 1px rgba(255,255,255,.8); transform: translate(-50%, -50%) rotate(var(--counter-angle)); animation: orbit-label var(--orbit-duration) linear infinite; animation-direction: var(--orbit-direction); transition: color .25s, opacity .25s; }
         .satellite::before { flex: 0 0 auto; width: 22px; height: 22px; border: 0; border-radius: 50%; background: url('assets/images/celestial/moon.svg') center / 132% no-repeat; filter: drop-shadow(1px 2px 2px rgba(31, 44, 52, .22)); content: ""; }
         .moon-slot:nth-child(even) .satellite::before { width: 18px; height: 18px; }
         .motion-toggle { position: relative; z-index: 2; margin: -16px 0 24px; padding: 5px 0; border: 0; border-bottom: 1px solid #aebec8; background: none; color: #536979; font-family: inherit; font-size: 11px; font-weight: 500; line-height: 1.5; cursor: pointer; }
         .skills-panel.is-paused .orbit-system, .skills-panel.is-paused .satellite { animation-play-state: paused; }
 
-        .satellite.major { color: #314b5d; font-size: 13px; font-weight: 680; }
         .skill-cluster:hover .satellite, .skill-cluster.is-active .satellite { color: #1f3e52; opacity: 1; }
         @keyframes orbit-system { to { transform: rotate(360deg); } }
         @keyframes orbit-label { from { transform: translate(-50%, -50%) rotate(var(--counter-angle)); } to { transform: translate(-50%, -50%) rotate(calc(var(--counter-angle) - 360deg)); } }
@@ -87,7 +96,6 @@
             .domain-label { max-width: 95px; padding-top: 16px; }
             .satellite { width: 88px; gap: 5px; font-size: 10px; }
             .satellite::before, .moon-slot:nth-child(even) .satellite::before { width: 16px; height: 16px; }
-            .satellite.major { font-size: 10px; }
         }
         @media (prefers-reduced-motion: reduce) { * { transition: none !important; } .orbit-system, .satellite { animation: none !important; } }
     </style>
@@ -123,19 +131,19 @@
                 <div class="skills-grid">
                     <article class="skill-cluster">
                         <button class="domain" type="button" aria-pressed="false"><span class="planet-surface" aria-hidden="true"></span><span class="domain-label">Life Insurance</span></button>
-                        <div class="orbit-system"><span class="moon-slot"><span class="satellite major">IFRS 17</span></span><span class="moon-slot"><span class="satellite major">LAGIC Capital</span></span><span class="moon-slot"><span class="satellite">Appointed Actuary</span></span><span class="moon-slot"><span class="satellite">Valuation &amp; Assumptions</span></span><span class="moon-slot"><span class="satellite">Participating Products</span></span></div>
+                        <div class="orbit-system five"><span class="moon-slot"><span class="satellite">Valuation</span></span><span class="moon-slot"><span class="satellite">Capital</span></span><span class="moon-slot"><span class="satellite">Risk Management</span></span><span class="moon-slot"><span class="satellite">Appointed Actuary</span></span><span class="moon-slot"><span class="satellite">IFRS 17</span></span></div>
                     </article>
                     <article class="skill-cluster">
                         <button class="domain" type="button" aria-pressed="false"><span class="planet-surface" aria-hidden="true"></span><span class="domain-label">Super</span></button>
-                        <div class="orbit-system"><span class="moon-slot"><span class="satellite major">Successor Fund Transfers</span></span><span class="moon-slot"><span class="satellite">Fund Merger Due Diligence</span></span><span class="moon-slot"><span class="satellite">Insurance Arrangements</span></span><span class="moon-slot"><span class="satellite">Defined Benefit Liabilities</span></span><span class="moon-slot"><span class="satellite major">Investment Governance</span></span></div>
+                        <div class="orbit-system five"><span class="moon-slot"><span class="satellite">SFT</span></span><span class="moon-slot"><span class="satellite">Governance</span></span><span class="moon-slot"><span class="satellite">DB Valuation</span></span><span class="moon-slot"><span class="satellite">Peer Benchmarking</span></span><span class="moon-slot"><span class="satellite">Operational Accuracy</span></span></div>
                     </article>
                     <article class="skill-cluster">
-                        <button class="domain" type="button" aria-pressed="false"><span class="planet-surface" aria-hidden="true"></span><span class="domain-label">Investments</span></button>
-                        <div class="orbit-system"><span class="moon-slot"><span class="satellite major">Performance Attribution</span></span><span class="moon-slot"><span class="satellite major">Asset Allocation</span></span><span class="moon-slot"><span class="satellite">Investment Options</span></span><span class="moon-slot"><span class="satellite">DCF Valuation</span></span><span class="moon-slot"><span class="satellite major">REIT Research</span></span></div>
+                        <button class="domain" type="button" aria-pressed="false"><span class="planet-surface" aria-hidden="true"></span><span class="domain-label">Investment</span></button>
+                        <div class="orbit-system four"><span class="moon-slot"><span class="satellite">Governance</span></span><span class="moon-slot"><span class="satellite">Option Review</span></span><span class="moon-slot"><span class="satellite">SAA</span></span><span class="moon-slot"><span class="satellite">Fees &amp; Tax</span></span></div>
                     </article>
                     <article class="skill-cluster">
                         <button class="domain" type="button" aria-pressed="false"><span class="planet-surface" aria-hidden="true"></span><span class="domain-label">Data &amp; AI</span></button>
-                        <div class="orbit-system"><span class="moon-slot"><span class="satellite major">Python &amp; R</span></span><span class="moon-slot"><span class="satellite">SQL</span></span><span class="moon-slot"><span class="satellite">Power BI</span></span><span class="moon-slot"><span class="satellite major">Excel VBA</span></span><span class="moon-slot"><span class="satellite">Power Automate</span></span></div>
+                        <div class="orbit-system six"><span class="moon-slot"><span class="satellite">Python</span></span><span class="moon-slot"><span class="satellite">R</span></span><span class="moon-slot"><span class="satellite">VBA</span></span><span class="moon-slot"><span class="satellite">Agentic AI</span></span><span class="moon-slot"><span class="satellite">AI Governance</span></span><span class="moon-slot"><span class="satellite">Coding Agents</span></span></div>
                     </article>
                 </div>
             </div>

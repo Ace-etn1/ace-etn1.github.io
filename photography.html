@@ -223,25 +223,30 @@
     </dialog>
 
     <script>
-        const files = [
-            '20240324_211430.jpg',
-            '20240514_144600.jpg',
-            '20240519_003313.jpg',
-            '20240519_004242.jpg',
-            '20240609_192549.jpg',
-            '20240625_020658_DSC03059.JPG',
-            '20240625_032426_DSC03097.JPG',
-            'DSC00010.JPG',
-            'DSC00835.JPG',
-            'DSC02986.JPG',
-            'DSC08327.JPG',
-            'DSC08547.JPG',
-            'DSC08567.JPG',
-            'DSC09054_1.JPG',
-            'DSC09332.JPG',
-            'DSC09832.JPG',
-            'DSC09936.JPG',
-            'DSC09962.JPG'
+        const photos = [
+            { full: '20230908_115913.jpg', thumb: '20230908_115913.webp' },
+            { full: '20240304_140749 v2.png', thumb: '20240304_140749 v2.webp' },
+            { full: '20240324_211430.jpg', thumb: '20240324_211430.webp' },
+            { full: '20240514_144600.jpg', thumb: '20240514_144600.webp' },
+            { full: '20240519_003313.jpg', thumb: '20240519_003313.webp' },
+            { full: '20240519_004242.jpg', thumb: '20240519_004242.webp' },
+            { full: '20240625_020658_DSC03059.JPG', thumb: '20240625_020658_DSC03059.webp' },
+            { full: '20250523_165329.jpg', thumb: '20250523_165329.webp' },
+            { full: 'DSC00849.jpg', thumb: 'DSC00849.webp' },
+            { full: 'DSC01696.jpg', thumb: 'DSC01696.webp' },
+            { full: 'DSC022751.jpg', thumb: 'DSC022751.webp' },
+            { full: 'DSC02601.jpg', thumb: 'DSC02601.webp' },
+            { full: 'DSC02607.jpg', thumb: 'DSC02607.webp' },
+            { full: 'DSC08327.JPG', thumb: 'DSC08327.webp' },
+            { full: 'DSC08547.JPG', thumb: 'DSC08547.webp' },
+            { full: 'DSC08567.JPG', thumb: 'DSC08567.webp' },
+            { full: 'DSC09054_1.JPG', thumb: 'DSC09054_1.webp' },
+            { full: 'DSC09832.JPG', thumb: 'DSC09832.webp' },
+            { full: 'DSC09936.JPG', thumb: 'DSC09936.webp' },
+            { full: 'DSC09962.JPG', thumb: 'DSC09962.webp' },
+            { full: 'mmexport1754718895013.jpg', thumb: 'mmexport1754718895013.webp' },
+            { full: 'mmexport1754719889603.jpg', thumb: 'mmexport1754719889603.webp' },
+            { full: 'Result1.png', thumb: 'Result1.webp' }
         ];
 
         const gallery = document.querySelector('.gallery');
@@ -249,19 +254,19 @@
         const viewer = dialog.querySelector('img');
         let current = 0;
 
-        files.forEach((file, index) => {
+        photos.forEach((photo, index) => {
             const button = document.createElement('button');
             button.className = 'photo';
             button.type = 'button';
             button.setAttribute('aria-label', `Open photograph ${index + 1}`);
-            button.innerHTML = `<img loading="lazy" decoding="async" src="images/compressed/${encodeURIComponent(file)}" alt="Jeff Jiang photograph ${index + 1}">`;
+            button.innerHTML = `<img loading="lazy" decoding="async" src="images/compressed/${encodeURIComponent(photo.thumb)}" alt="Jeff Jiang photograph ${index + 1}">`;
             button.addEventListener('click', () => openPhoto(index));
             gallery.append(button);
         });
 
         function openPhoto(index) {
-            current = (index + files.length) % files.length;
-            viewer.src = `images/fulls/${encodeURIComponent(files[current])}`;
+            current = (index + photos.length) % photos.length;
+            viewer.src = `images/fulls/${encodeURIComponent(photos[current].full)}`;
             viewer.alt = `Jeff Jiang photograph ${current + 1}`;
             if (!dialog.open) dialog.showModal();
         }

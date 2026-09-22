@@ -40,12 +40,14 @@
         .reverse { transform: rotateY(180deg); }
         .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .number { font: 42px/.9 Chewy, cursive; }
-        .doodle { width: 90px; height: 90px; margin: 20px auto 10px; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+        .doodle { display: block; flex: 0 0 90px; width: 90px; height: 90px; aspect-ratio: 1; margin: 20px auto 10px; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
         .statement { display: block; font: 400 clamp(26px, 2.6vw, 35px)/1.1 Chewy, cursive; margin: 8px 0 12px; }
         .tap { margin-top: auto; padding-top: 17px; border-top: 2px dashed #11121055; display: flex; align-items: center; justify-content: space-between; font: 19px Chewy, cursive; }
         .tap b { font: 29px Chewy, cursive; }
-        .result { font: 29px Chewy, cursive; display: flex; align-items: center; gap: 9px; }
-        .result svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+        .result { display: flex; align-items: center; gap: 10px; font: 29px Chewy, cursive; }
+        .verdict { display: inline-flex; min-width: 76px; padding: 5px 13px; border: 3px solid var(--ink); border-radius: 999px; align-items: center; justify-content: center; font: 23px/1 Chewy, cursive; letter-spacing: .08em; }
+        .verdict.truth { background: #43a867; color: var(--paper); transform: rotate(2deg); }
+        .verdict.lie { background: #df4f4f; color: var(--paper); transform: rotate(-3deg); }
         .reveal-copy { display: block; font-size: 14px; line-height: 1.5; margin: 14px 0 18px; }
         .photo { display: block; width: 100%; height: 185px; object-fit: cover; border: 2px solid var(--ink); border-radius: 8px; background: var(--blue); transform: rotate(-2deg); }
         .reverse .tap { font-size: 16px; border: 0; }
@@ -57,8 +59,9 @@
         .reset { background: transparent; border: 2px solid var(--ink); border-radius: 50px; padding: 10px 23px; font: 19px Chewy, cursive; cursor: pointer; transition: background .2s, transform .2s; }
         .reset:hover { background: var(--paper); transform: rotate(-3deg); }
         @media (min-width: 1500px) { header { padding: 65px 0 48px; } .card { height: 470px; } .doodle { margin-top: 32px; margin-bottom: 22px; } .photo { height: 215px; } }
-        @media (max-width: 850px) { .page { padding: 0 22px 32px; } .cards { gap: 17px; } .side { padding: 18px; } .card { height: 420px; } .statement { font-size: 27px; }  .result { font-size: 23px; } }
+        @media (max-width: 850px) { .page { padding: 0 22px 32px; } .cards { gap: 17px; } .side { padding: 18px; } .card { height: 480px; } .statement { font-size: 27px; }  .result { font-size: 23px; } }
         @media (max-width: 650px) { .page { max-width: 440px; padding: 0 14px 35px; } .topbar { padding: 15px 10px; gap: 10px; } .topbar a { font-size: 10px; } .section-links { gap: 9px; } header { padding: 36px 0 24px; } h1 span { display: block; } .lie-title { margin: 10px auto 0; width: max-content; } .cards { grid-template-columns: 1fr; gap: 38px; padding: 18px 10px 20px; } .card { height: 410px; } .side { padding: 24px; } .statement { font-size: 32px; } .photo { height: 180px; } .result { font-size: 29px; } }
+        @media (max-width: 380px) { .card { height: 480px; } }
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } .card:hover, .card:focus-visible { transform: rotate(var(--lean)); } }
     </style>
 </head>
@@ -78,16 +81,15 @@
         </footer>
     </main>
     <script>
-        // Add stories and image paths later. Set truth to true or false once the answers are confirmed.
         const stories = [
-            { statement: 'I have slept in the car 2 days in a row, twice', reveal: 'Story coming soon.', truth: null, image: 'assets/images/story-placeholder.svg', alt: 'Photo placeholder' },
-            { statement: 'I own a telescope', reveal: 'Story coming soon.', truth: null, image: 'assets/images/story-placeholder.svg', alt: 'Photo placeholder' },
-            { statement: 'I am obsessed with coffee', reveal: 'Story coming soon.', truth: null, image: 'assets/images/story-placeholder.svg', alt: 'Photo placeholder' },
+            { statement: 'I’ve slept in a car for several nights in a row — twice', reveal: 'The first time was during the 2019 NSW bushfires; the second was on a motorhome trip in NZ.', truth: true, image: 'assets/images/stories/motorhome-lake-pukaki-exterior.jpg', alt: 'Motorhome parked beside Lake Pukaki with the Southern Alps behind it' },
+            { statement: 'I’ve seen Saturn from my balcony', reveal: 'I saw Saturn’s ring from the balcony through my telescope.', truth: true, image: 'assets/images/stories/telescope-balcony.webp', alt: 'Telescope set up on a balcony at night' },
+            { statement: 'I’ve broken a badminton racket during a game.', reveal: 'That never happened. I’m a safe badminton player 😊', truth: false, image: 'assets/images/stories/badminton-player.webp', alt: 'Jeff jumping to hit a badminton shot on an indoor court' },
         ];
         const doodles = [
             '<path d="M 14 56 L 23 35 Q 49 30 75 35 L 86 56 L 88 76 L 12 76 Z M 16 55 L 84 55 M 48 35 L 48 55 M 23 64 L 31 64 M 69 64 L 77 64 M 20 77 L 20 84 L 31 84 L 31 77 M 69 77 L 69 84 L 80 84 L 80 77"/><path d="M 61 19 L 72 19 L 62 27 L 73 27" stroke-width="3"/>',
-            '<path d="M 22 40 L 68 19 L 79 41 L 32 62 Z M 66 16 L 81 45 M 23 45 L 13 50 L 19 62 L 29 57 M 47 57 L 50 65 M 50 65 L 30 89 M 50 65 L 71 89 M 50 65 L 50 89"/><path d="M 85 12 L 85 22 M 80 17 L 90 17 M 13 19 L 13 25 M 10 22 L 16 22" stroke-width="3"/>',
-            '<path d="M 19 39 L 72 39 L 68 68 Q 65 81 46 81 Q 25 80 22 68 Z M 73 44 Q 92 40 88 56 Q 86 65 71 64 M 13 86 Q 47 93 80 85"/><path d="M 32 29 Q 23 23 33 13 M 49 28 Q 42 22 51 10 M 66 29 Q 59 23 68 14" stroke-width="3"/>',
+            '<ellipse cx="50" cy="50" rx="43" ry="14" transform="rotate(-23 50 50)"/><circle cx="50" cy="50" r="23" fill="var(--paper)"/><path d="M 35 36 Q 47 31 60 36 M 33 44 Q 47 38 65 43" stroke-width="2.5"/><path d="M 7 50 A 43 14 0 0 0 93 50" transform="rotate(-23 50 50)"/><path d="M 80 12 V 22 M 75 17 H 85 M 19 77 V 85 M 15 81 H 23" stroke-width="3"/>',
+            '<defs><clipPath id="badminton-strings"><ellipse cx="34" cy="30" rx="17" ry="23"/></clipPath></defs><g transform="rotate(-35 34 30)"><g clip-path="url(#badminton-strings)" stroke-width="1.6"><path d="M 24 7 V 53 M 31 7 V 53 M 38 7 V 53 M 45 7 V 53 M 17 16 H 51 M 17 23 H 51 M 17 30 H 51 M 17 37 H 51 M 17 44 H 51"/></g><ellipse cx="34" cy="30" rx="17" ry="23"/><path d="M 34 53 V 78"/><rect x="30" y="78" width="8" height="16" rx="3" fill="var(--paper)"/><path d="M 31 83 H 37 M 31 88 H 37" stroke-width="2"/></g><g transform="rotate(18 78 25)" stroke-width="3"><path d="M 73 35 L 64 10 Q 78 5 92 10 L 83 35 Z M 73 9 L 76 35 M 83 9 L 80 35 M 68 21 H 88"/><path d="M 73 35 H 83 V 39 A 5 5 0 0 1 73 39 Z" fill="var(--paper)"/></g>',
         ];
         const container = document.querySelector('.cards');
         const seen = new Set();
@@ -102,8 +104,9 @@
             card.className = 'card';
             card.setAttribute('aria-expanded', 'false');
             card.setAttribute('aria-controls', `reveal-${index}`);
-            const result = story.truth === null ? 'The story' : story.truth ? 'True story!' : 'The lie!';
-            card.innerHTML = `<span class="card-inner"><span class="side front"><span class="card-top"><span class="number">0${index + 1}</span></span><svg class="doodle" viewBox="0 0 100 100" aria-hidden="true">${doodles[index]}</svg><span class="statement"></span><span class="tap">Flip <b aria-hidden="true">↗</b></span></span><span class="side reverse" id="reveal-${index}" aria-hidden="true"><span class="result">${result}</span><span class="reveal-copy"></span><img class="photo" width="480" height="300"><span class="tap">Flip back <b aria-hidden="true">↶</b></span></span></span>`;
+            const result = story.truth ? 'TRUE' : 'LIE';
+            const verdictClass = story.truth ? 'truth' : 'lie';
+            card.innerHTML = `<span class="card-inner"><span class="side front"><span class="card-top"><span class="number">0${index + 1}</span></span><svg class="doodle" viewBox="0 0 100 100" aria-hidden="true">${doodles[index]}</svg><span class="statement"></span><span class="tap">Flip <b aria-hidden="true">↗</b></span></span><span class="side reverse" id="reveal-${index}" aria-hidden="true"><span class="result"><span class="verdict ${verdictClass}">${result}</span></span><span class="reveal-copy"></span><img class="photo" width="480" height="300"><span class="tap">Flip back <b aria-hidden="true">↶</b></span></span></span>`;
             card.querySelector('.statement').textContent = story.statement;
             card.querySelector('.reveal-copy').textContent = story.reveal;
             const photo = card.querySelector('img');

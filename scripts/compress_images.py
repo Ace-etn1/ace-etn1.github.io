@@ -1,5 +1,5 @@
 import os
-from PIL import Image
+from PIL import Image, ImageOps
 
 # Define source and destination directories (relative to script location)
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -7,20 +7,17 @@ project_root = os.path.dirname(script_dir)
 source_dir = os.path.join(project_root, 'images', 'fulls')
 destination_dir = os.path.join(project_root, 'images', 'compressed')
 
-# Ensure destination directory exists
 os.makedirs(destination_dir, exist_ok=True)
 
-# Loop through all files in the source directory
+created = 0
 for filename in os.listdir(source_dir):
-    # Check if the file is an image
-    if filename.endswith(('.jpg','.JPG','.jpeg', '.png', '.gif', '.bmp')):
-        # Open an image file
+    if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp')):
         with Image.open(os.path.join(source_dir, filename)) as img:
-            # Define the save path for the compressed image
-            save_path = os.path.join(destination_dir, filename)
-            # Save the image with compression (quality can be adjusted as needed)
-            img.save(save_path, optimize=True, quality=30)
+            img = ImageOps.exif_transpose(img).convert('RGB')
+            img.thumbnail((1200, 1200), Image.Resampling.LANCZOS)
+            stem = os.path.splitext(filename)[0]
+            save_path = os.path.join(destination_dir, f'{stem}.webp')
+            img.save(save_path, 'WEBP', quality=78, method=6)
+            created += 1
 
-print("Images have been copied and compressed.")
-
-#why is not syncing
+print(f'Built {created} gallery thumbnails.')
