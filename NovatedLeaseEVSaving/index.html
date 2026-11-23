@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6dbefd">
+    <meta name="description" content="Compare a five-year FBT-exempt EV novated lease plus buyout with buying outright, including tax, GST, fees and running costs.">
+    <title>EV Novated Lease Savings · Jeff Jiang</title>
+    <link rel="preload" href="../assets/fonts/Chewy-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="./styles.css?v=20261003-method-notes">
+</head>
+<body>
+    <nav class="topbar" aria-label="Page navigation">
+        <a href="../index.html">Home</a>
+        <div class="section-links"><a href="../photography.html">Photography</a><a href="../professional.html">Professional</a><a href="../two-truths-one-lie.html">2 Truths 1 Lie</a><a href="../lets-connect.html">Connect</a><a href="../links.html">Links</a></div>
+    </nav>
+    <main class="page">
+        <span class="eyebrow">Australia · FBT-exempt EV</span>
+        <h1>Lease it. Buy it.<br>What’s the saving?</h1>
+        <div class="calculator">
+            <form class="inputs" id="assumptions" novalidate>
+                <div class="panel-heading"><h2>Your car &amp; tax</h2><span>5-year term</span></div>
+                <div class="fields">
+                    <label class="field" for="vehicle-price"><span class="field-label">Drive-away vehicle price</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="vehicle-price" name="vehiclePrice" data-model type="number" min="0.01" step="0.01" value="60000" required></span><span class="input-note">Includes GST and first-year registration / CTP.</span></label>
+                    <label class="field" for="lease-rate"><span class="field-label">Annual lease interest rate</span><span class="input-wrap"><input id="lease-rate" name="leaseRate" data-model type="number" min="0" max="100" step="0.01" value="9" required><span class="adornment suffix" aria-hidden="true">%</span></span><span class="input-note">Use the annual finance rate from your quote.</span></label>
+                    <label class="field" for="tax-rate"><span class="field-label">Marginal tax rate + Medicare</span><span class="input-wrap"><select id="tax-rate" name="taxRate" data-model><option value="32">32% (30% + 2%)</option><option value="39">39% (37% + 2%)</option></select></span><span class="input-note">Includes the standard levy. Assumes no surcharge.</span></label>
+                    <label class="field" for="annual-income"><span class="field-label">Annual taxable income <span class="optional">optional</span></span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="annual-income" name="annualIncome" data-model data-optional type="number" min="45000" step="1" placeholder="Use marginal rate" aria-describedby="income-note"></span><span class="input-note" id="income-note">Before this lease, after other deductions, excluding super. Leave blank to use the selected rate.</span></label>
+                </div>
+
+                <details class="quote-details" id="running-costs">
+                    <summary>Your annual running costs <span aria-hidden="true">+</span></summary>
+                    <p class="section-note">Use the best prices you can find. The same costs apply to both options; the lease adds the available tax savings.</p>
+                    <div class="fields">
+                        <label class="field" for="insurance"><span class="field-label">Comprehensive insurance</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="insurance" name="insurance" data-model type="number" min="0" step="0.01" value="1500" required></span></label>
+                        <label class="field" for="rego"><span class="field-label">Registration &amp; CTP</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="rego" name="rego" data-model type="number" min="0" step="0.01" value="900" required></span></label>
+                        <label class="field" for="home-charging"><span class="field-label">Home charging</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="home-charging" name="homeCharging" data-model type="number" min="0" step="0.01" value="600" required></span></label>
+                        <label class="field" for="public-charging"><span class="field-label">Public charging</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="public-charging" name="publicCharging" data-model type="number" min="0" step="0.01" value="300" required></span></label>
+                        <label class="field" for="maintenance"><span class="field-label">Servicing, repairs &amp; tyres</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="maintenance" name="maintenance" data-model type="number" min="0" step="0.01" value="600" required></span></label>
+                        <label class="field" for="cost-growth"><span class="field-label">Annual increase in running costs</span><span class="input-wrap"><input id="cost-growth" name="runningInflation" data-model type="number" min="0" max="100" step="0.1" value="3" required><span class="adornment suffix" aria-hidden="true">%</span></span></label>
+                    </div>
+                    <p class="input-note">Amounts include GST and duties. Starting values are examples, not market quotes.</p>
+                </details>
+
+                <details class="quote-details" id="quote-details">
+                    <summary>Lease fees &amp; GST details <span aria-hidden="true">+</span></summary>
+                    <p class="section-note">Replace these assumptions with your lease quote and invoices.</p>
+                    <div class="fields">
+                        <label class="field" for="setup-fee"><span class="field-label">Financed establishment fee, ex GST</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="setup-fee" name="setupFee" data-model type="number" min="0" step="0.01" value="500" required></span><span class="input-note">Added to finance; exclude fees already in the rate.</span></label>
+                        <label class="field" for="admin-monthly"><span class="field-label">Monthly admin fee, incl GST</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="admin-monthly" name="adminMonthly" data-model type="number" min="0" step="0.01" value="25" required></span></label>
+                        <label class="field" for="upfront-expense"><span class="field-label">Other upfront lease expense</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="upfront-expense" name="upfrontExpense" data-model type="number" min="0" step="0.01" value="0" required></span><span class="input-note">Paid from after-tax cash. Not a vehicle deposit.</span></label>
+                        <label class="field" for="buyout-fees"><span class="field-label">Buyout / transfer fees &amp; duty</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="buyout-fees" name="buyoutFees" data-model type="number" min="0" step="0.01" value="0" required></span><span class="input-note">Total cash due beyond the residual, including GST.</span></label>
+                        <label class="field" for="residual-rate"><span class="field-label">Residual percentage</span><span class="input-wrap"><input id="residual-rate" name="residualRate" data-model type="number" min="28.13" max="100" step="0.01" value="28.13" required><span class="adornment suffix" aria-hidden="true">%</span></span></label>
+                        <label class="field" for="buyout-override"><span class="field-label">Quoted residual buyout, incl GST</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="buyout-override" name="buyoutOverride" data-model data-optional type="number" min="0" step="0.01" placeholder="Use residual percentage"></span><span class="input-note">Optional; replaces the calculated residual.</span></label>
+                        <label class="field" for="non-gst-purchase"><span class="field-label">Non-GST part of drive-away price</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="non-gst-purchase" name="nonGstPurchase" data-model type="number" min="0" step="0.01" value="3000" required></span><span class="input-note">Duty, registration and other GST-free charges.</span></label>
+                        <label class="field" for="purchase-gst"><span class="field-label">Quoted purchase GST saving</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="purchase-gst" name="purchaseGstCredit" data-model data-optional type="number" min="0" step="0.01" placeholder="Calculate automatically"></span><span class="input-note">Optional; use 0 for a purchase with no GST credit.</span></label>
+                        <label class="field" for="insurance-gst"><span class="field-label">GST on annual insurance invoice</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="insurance-gst" name="insuranceGst" data-model type="number" min="0" step="0.01" value="0" required></span><span class="input-note">GST dollars within the premium; excludes stamp duty. Leave 0 if unknown.</span></label>
+                        <label class="field" for="rego-gst"><span class="field-label">GST on annual registration / CTP</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="rego-gst" name="regoGst" data-model type="number" min="0" step="0.01" value="0" required></span><span class="input-note">Use the GST dollars on the renewal invoice.</span></label>
+                        <label class="field" for="repayment-override"><span class="field-label">Quoted monthly finance, ex GST</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="repayment-override" name="repaymentOverride" data-model data-optional type="number" min="0.01" step="0.01" placeholder="Calculate from loan rate"></span><span class="input-note">Optional; excludes running costs and admin. Overrides calculated repayments.</span></label>
+                        <label class="field" for="employer-adjustment"><span class="field-label">Employer adjustment per month</span><span class="input-wrap"><span class="adornment" aria-hidden="true">$</span><input id="employer-adjustment" name="employerAdjustment" data-model data-optional type="number" min="0" step="0.01" placeholder="0 for a standard lease"></span><span class="input-note">Pre-tax cost from the quote, e.g. a luxury-car adjustment. Required above the car limit.</span></label>
+                    </div>
+                    <label class="check-field"><input id="package-insurance" name="packageInsurance" data-model type="checkbox" checked><span>Reimburse my self-arranged insurance through the lease</span></label>
+                    <label class="check-field"><input id="package-home" name="packageHomeCharging" data-model type="checkbox" checked><span>Reimburse substantiated home charging through the lease</span></label>
+                </details>
+                <p id="input-errors" class="input-errors" role="alert" hidden></p>
+            </form>
+
+            <section class="result" aria-labelledby="result-heading">
+                <div class="result-inner">
+                    <p class="result-kicker">Lease for 5 years + buyout</p>
+                    <h2 id="result-heading">Estimated saving</h2>
+                    <output class="result-value" id="result-value" aria-live="polite" aria-describedby="result-explainer">—</output>
+                    <p class="result-explainer" id="result-explainer">Enter your assumptions to calculate the saving.</p>
+                    <div class="result-rule" aria-hidden="true"></div>
+                    <div class="pv-comparison cost-comparison">
+                        <p>Present value of total costs</p>
+                        <dl>
+                            <div><dt>Novated lease + buyout</dt><dd id="lease-pv">—</dd></div>
+                            <div><dt>Buy outright</dt><dd id="outright-pv">—</dd></div>
+                        </dl>
+                    </div>
+                    <div class="monthly-comparison cost-comparison">
+                        <dl><div><dt>Average monthly lease</dt><dd id="lease-monthly" aria-describedby="monthly-note">—</dd></div></dl>
+                    </div>
+                    <p class="result-basis">You own the same car after five years in both options.</p>
+                    <button type="button" class="method-button" id="method-button" aria-haspopup="dialog"><span aria-hidden="true">ⓘ</span> Assumptions &amp; method</button>
+                </div>
+            </section>
+        </div>
+        <noscript><p>Enable JavaScript to calculate and open the methodology.</p></noscript>
+    </main>
+
+    <dialog id="method-dialog" aria-labelledby="method-title">
+        <div class="dialog-heading"><div><p class="dialog-kicker">Under 3 minutes · Reviewed 3 October 2026</p><h2 id="method-title">Assumptions &amp; method</h2></div><button id="method-close" type="button" aria-label="Close assumptions and method">×</button></div>
+        <div class="method-copy">
+            <p><strong>What the result means.</strong> Today's value of buying outright and running the car, less today's value of 60 lease payments, running costs, fees and the final cash buyout. Both options end with the same car; its resale value cancels.</p>
+            <p id="monthly-note"><strong>Monthly cost.</strong> After tax, including running costs and lease fees. Total lease cash cost spread over 60 months. This average is undiscounted and excludes the final buyout and transfer fees.</p>
+            <p><strong>Tax.</strong> 32% = 30% income tax + 2% Medicare; 39% = 37% + 2%. These flat rates apply to all salary sacrifice unless income is entered. Income mode calculates the before/after resident tax difference, including bracket changes and the low income tax offset (LITO). It uses five full annual tax periods and constant income; part-year starts are not modelled. Taxable income after sacrifice must remain at least $45,000. Full Medicare levy assumed; no surcharge, HELP, other benefit tests or super changes.</p>
+            <p><strong>GST &amp; finance.</strong> Automatic purchase GST saving is one-eleventh of the price excluding non-GST charges, capped at $6,353 (2026–27). Finance covers the remaining price plus establishment fees. Rental and admin GST credits are fully passed through. Insurance/CTP use only the GST entered from invoices; stamp duty earns no GST credit. Public charging and maintenance assume full GST credits. Home charging uses substantiated actual cost with no assumed GST credit. Quote overrides take priority.</p>
+            <p><strong>Running costs.</strong> Both options use the same competitively sourced prices. Self-arranged insurance is reimbursed pre-tax where the provider allows it; untick reimbursement if unavailable. First-year registration/CTP is already in the drive-away price; only four renewals are added. Costs rise by the selected annual percentage and are spread monthly. Reimbursement delays and annual-payment timing differences are not modelled.</p>
+            <p><strong>Buyout.</strong> Default residual: 28.13% of the vehicle cost after purchase GST savings, excluding establishment fees. Add 10% GST and entered buyout/transfer charges; pay after tax at month 60. Enter the quote's GST-inclusive residual when available.</p>
+            <p><strong>Discounting.</strong> <span id="discount-note">Discount rate = lease rate − 2 percentage points.</span> Converted to effective monthly discounting. This still applies when quoted repayments override the finance calculation. Rates below 2% produce a negative discount rate. No extra investment return is added.</p>
+            <p><strong>Scope.</strong> Full FBT exemption for all five years, continuous salary packaging and private use. Treasury has proposed concession changes from 2027; confirm the contract retains full exemption. Shared home-charger costs cancel. No early termination, future tax-law changes or unentered fees are assumed. Default costs are illustrations.</p>
+        </div>
+        <p class="method-sources">Sources: <a href="https://www.ato.gov.au/api/public/content/0-32181d66-8851-43d5-b224-bdfbf6e13005" target="_blank" rel="noopener noreferrer">ATO EV exemption</a> · <a href="https://www.ato.gov.au/api/public/content/0-c9dddeeb-f86b-48bf-b5fe-c4dad58380f5" target="_blank" rel="noopener noreferrer">GST</a> · <a href="https://www.ato.gov.au/law/view/document?DocID=AID%2FAID20021004%2F00001" target="_blank" rel="noopener noreferrer">Residuals</a> · <a href="https://www.ato.gov.au/law/view/pdf/acts/20250028.pdf" target="_blank" rel="noopener noreferrer">Tax brackets</a> · <a href="https://www.ato.gov.au/api/public/content/0-2319183b-9958-4848-88f9-ea9dc64b121e" target="_blank" rel="noopener noreferrer">LITO</a> · <a href="https://www.pwc.com.au/tax/monthly-tax-updates/july-2026.html" target="_blank" rel="noopener noreferrer">2026–27 car limit</a> · <a href="https://www.novatedleaseaustralia.com.au/novated-lease-explained" target="_blank" rel="noopener noreferrer">Insurance reimbursement</a> · <a href="https://consult.treasury.gov.au/c2026-800622" target="_blank" rel="noopener noreferrer">Proposed FBT changes</a></p>
+    </dialog>
+    <script type="module" src="./calculator.mjs?v=20261003-method-notes"></script>
+</body>
+</html>

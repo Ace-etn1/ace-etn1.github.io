@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6dbefd">
+    <title>Life Expectancy Map · Jeff Jiang</title>
+    <link rel="stylesheet" href="assets/leaflet/leaflet.css">
+    <script defer src="assets/leaflet/leaflet.js"></script>
+    <script defer src="assets/mortality-map/regions.js"></script>
+    <script defer src="assets/mortality-map/map.js"></script>
+    <link rel="preload" href="assets/fonts/Chewy-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <style>
+        @font-face { font-family: Chewy; src: url('assets/fonts/Chewy-Regular.ttf') format('truetype'); font-display: swap; }
+        :root { color-scheme: light; --blue: #6dbefd; --ink: #111210; --paper: #fffefb; --yellow: #ffe45c; }
+        * { box-sizing: border-box; }
+        html { scrollbar-gutter: stable; }
+        body { margin: 0; min-width: 320px; min-height: 100svh; background: var(--blue); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+        .topbar { display: flex; width: min(1320px, 100%); min-height: 56px; margin: 0 auto; padding: 18px clamp(16px, 3vw, 32px); align-items: center; justify-content: space-between; gap: 18px; }
+        .topbar a { color: inherit; font-size: 12px; font-weight: 600; letter-spacing: .035em; text-decoration: none; opacity: .58; transition: opacity .2s ease; }
+        .topbar a:hover, .topbar a[aria-current="page"] { opacity: 1; }
+        .section-links { display: flex; min-width: 0; align-items: center; gap: clamp(10px, 2vw, 24px); overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+        .section-links::-webkit-scrollbar { display: none; }
+        .section-links a { flex: none; }
+        main { max-width: 1220px; margin: auto; padding: 24px clamp(16px, 4vw, 48px) 40px; }
+        h1 { margin: 0 0 clamp(20px, 3vw, 36px); font: 400 clamp(48px, 7vw, 84px)/1 Chewy, cursive; }
+        p { line-height: 1.5; }
+        .panel { border: 2px solid; border-radius: 18px; overflow: hidden; background: var(--paper); box-shadow: 4px 5px var(--ink); }
+        .toolbar, .legend { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; padding: 12px 18px; }
+        .toolbar { border-bottom: 1px solid; }
+        .postcode-search { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        #postcode { width: 7ch; box-sizing: content-box; padding: 8px; border: 1px solid; border-radius: 6px; font: inherit; }
+        #details.has-selection { padding: 6px 12px; border-radius: 6px; background: #162f42; color: white; font-weight: 600; }
+        select, button { max-width: 100%; padding: 8px; border: 1px solid; border-radius: 6px; background: white; color: inherit; font: inherit; }
+        button { cursor: pointer; }
+        #map { height: clamp(400px, 62svh, 760px); background: #e4f0f4; isolation: isolate; }
+        .region-stats strong { font-size: 16px; }
+        .region-stats p { margin: 6px 0 10px; color: #465965; }
+        .region-stats dl { display: grid; grid-template-columns: 1fr auto; gap: 5px 12px; margin: 0; }
+        .region-stats dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+        .region-stats dt:nth-of-type(4), .region-stats dd:nth-of-type(4) { border-top: 1px solid #c8cbcd; padding-top: 7px; }
+        .legend { border-top: 1px solid; font-size: 14px; }
+        .legend span { display: inline-flex; gap: 5px; align-items: center; }
+        .legend i { width: 20px; height: 12px; border: 1px solid #24424c; border-radius: 2px; }
+        .map-info { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        dialog { width: min(380px, 90vw); padding: 24px; border: 2px solid; border-radius: 16px; background: var(--paper); color: var(--ink); }
+        dialog h2 { margin: 0; }
+        dialog::backdrop { background: rgb(15 35 46 / 55%); }
+        a:focus-visible { outline: 3px dashed var(--ink); outline-offset: 5px; }
+        @media (max-width: 720px) {
+            .topbar { padding: 15px 10px; gap: 10px; }
+            .topbar a { font-size: 10px; }
+            .section-links { gap: 9px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="topbar" aria-label="Page navigation">
+        <a href="index.html">Home</a>
+        <div class="section-links"><a href="photography.html">Photography</a><a href="professional.html">Professional</a><a href="two-truths-one-lie.html">2 Truths 1 Lie</a><a href="lets-connect.html">Connect</a><a href="links.html">Links</a></div>
+    </nav>
+    <main>
+        <h1>Life Expectancy Map</h1>
+        <section class="panel" aria-label="Interactive regional map">
+            <div class="toolbar">
+                <form class="postcode-search" id="postcode-search" role="search">
+                    <label for="postcode">Postcode</label>
+                    <input id="postcode" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="e.g. 2060" required pattern="[0-9]{4}" title="Enter a four-digit Australian postcode">
+                    <button type="submit">Search</button>
+                    <output id="postcode-status" aria-live="polite"></output>
+                </form>
+                <label for="level">Boundary level</label>
+                <select id="level"><option>SA4</option><option>SA3</option><option>SA2</option></select>
+                <button id="reset" type="button">Reset view</button>
+                <output id="details" aria-live="polite"></output>
+            </div>
+            <div id="map" role="region" aria-label="Australian statistical regions map. Use arrow keys to pan and plus or minus to zoom."></div>
+            <div id="legend" class="legend"><strong>Weighted average difference vs Australia (years)</strong></div>
+        </section>
+        <div class="map-info">
+            <button type="button" aria-haspopup="dialog" aria-controls="methodology">Methodology</button>
+            <button type="button" aria-haspopup="dialog" aria-controls="nerd-data">Analysis</button>
+        </div>
+        <dialog id="methodology" aria-labelledby="methodology-title">
+            <h2 id="methodology-title">Methodology</h2>
+            <p>Methodology details coming soon.</p>
+            <form method="dialog"><button type="submit">Close</button></form>
+        </dialog>
+        <dialog id="nerd-data" aria-labelledby="nerd-data-title">
+            <h2 id="nerd-data-title">Analysis</h2>
+            <p>Analysis coming soon.</p>
+            <form method="dialog"><button type="submit">Close</button></form>
+        </dialog>
+    </main>
+</body>
+</html>
