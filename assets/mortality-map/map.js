@@ -161,10 +161,30 @@ async function showLevel() {
     }
 }
 
+const rankingMenu = document.getElementById('ranking-category');
+const rankingSummary = document.getElementById('current-ranking');
+const rankingButtons = document.querySelectorAll('#ranking-options button');
+for (const button of rankingButtons) {
+    button.addEventListener('click', () => {
+        for (const option of rankingButtons) {
+            const selected = option === button;
+            option.setAttribute('aria-pressed', String(selected));
+            document.getElementById(option.getAttribute('aria-controls')).hidden = !selected;
+        }
+        rankingSummary.textContent = button.textContent;
+        document.getElementById('ranking-metric').textContent = button.dataset.metric;
+        rankingMenu.open = false;
+        rankingSummary.focus();
+    });
+}
+document.getElementById('leaderboard').addEventListener('close', () => { rankingMenu.open = false; });
+
 picker.addEventListener('change', showLevel);
 for (const button of document.querySelectorAll('.map-info button')) {
     const dialog = document.getElementById(button.getAttribute('aria-controls'));
-    button.addEventListener('click', () => dialog.showModal());
+    button.addEventListener('click', () => {
+        dialog.showModal();
+    });
 }
 showLevel();
 

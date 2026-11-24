@@ -9,7 +9,7 @@
 <style>
 @font-face{font-family:Chewy;src:url('assets/fonts/Chewy-Regular.ttf') format('truetype');font-display:swap}
 :root{color-scheme:light;background:#6dbefd;--blue:#6dbefd;--ink:#111210;--paper:#fffefb}*{box-sizing:border-box}body{margin:0;background:var(--blue);color:var(--ink)}
-.stage{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:24px 18px;overflow:hidden;perspective:900px}.scene{display:grid;grid-template-columns:minmax(150px,1fr) minmax(0,560px) minmax(150px,1fr);grid-template-areas:'photo hero pro' 'game hero connect';align-items:center;gap:24px clamp(24px,5vw,90px);width:min(1240px,100%)}
+.stage{min-height:calc(100vh - 56px);min-height:calc(100svh - 56px);display:grid;place-items:center;padding:24px 18px;overflow:hidden;perspective:900px}.scene{display:grid;grid-template-columns:minmax(150px,1fr) minmax(0,560px) minmax(150px,1fr);grid-template-areas:'photo hero pro' 'game hero connect';align-items:center;gap:24px clamp(24px,5vw,90px);width:min(1240px,100%)}
 .hero{grid-area:hero;display:flex;flex-direction:column;align-items:center;min-width:0}.name{cursor:pointer;z-index:2;margin:0 0 8px;font:400 clamp(44px,min(12vw,10svh),106px)/.9 Chewy,cursive;text-align:center;letter-spacing:.025em;text-transform:uppercase;user-select:none}.name-line{display:block}.name-line:first-child{transform:rotate(-6deg)}.name-line:last-child{margin-top:.08em;transform:rotate(3deg)}.name-letter{display:inline-block}.name-letter:nth-child(even){transform:translateY(-.035em) rotate(5deg)}.name-letter:nth-child(3n){transform:rotate(-7deg)}
 .portrait{width:min(560px,100%,67svh);transform:translate3d(var(--x,0),var(--y,0),0) rotateX(var(--rx,0)) rotateY(var(--ry,0));transition:transform .22s ease-out}.grab{display:block;width:100%;padding:0;border:0;background:transparent;cursor:grab;touch-action:none;transform-origin:50% 65%}.grab.is-dragging{cursor:grabbing}.grab.is-dragging .face{animation-play-state:paused}.face{position:relative;animation:float 1.85s ease-in-out infinite}.portrait img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none;mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent),linear-gradient(to bottom,transparent,#000 7%,#000 94%,transparent);mask-composite:intersect}.eyes{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .expression-brow,.expression-mouth,.laugh-eyes{display:none}[data-expression=curious] .expression-brow,[data-expression=laugh] .expression-mouth,[data-expression=surprised] .expression-mouth{display:inline}[data-expression=laugh] .laugh-eyes{display:inline}[data-expression=laugh] .pupil{opacity:0}[data-expression=surprised] .pupil>ellipse:first-child{rx:16px;ry:23px}[data-expression=surprised] .pupil>ellipse:last-child{opacity:0}.laugh-mouth,.surprised-mouth{display:none}[data-expression=laugh] .laugh-mouth,[data-expression=surprised] .surprised-mouth{display:inline}
@@ -19,9 +19,25 @@ a:focus-visible,button:focus-visible,.name:focus-visible{outline:3px dashed var(
 @keyframes float{0%,100%{transform:translateY(12px) rotate(-2.5deg)}50%{transform:translateY(-12px) rotate(2.5deg)}}
 @media(max-width:760px){.stage{padding:32px 18px 44px;overflow:auto}.scene{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:'hero hero' 'photo pro' 'game connect';gap:38px 20px}.tile h2{font-size:24px}.icon{width:96px}.portrait{width:min(560px,92vw,58svh)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.portrait{transform:none!important}}
+.topbar { display: flex; width: min(1320px, 100%); min-height: 56px; margin: 0 auto; padding: 18px clamp(16px, 3vw, 32px); align-items: center; justify-content: space-between; gap: 18px; }
+.topbar a { color: inherit; font-size: 12px; font-weight: 600; letter-spacing: .035em; text-decoration: none; opacity: .58; transition: opacity .2s ease; }
+.topbar a:hover, .topbar a[aria-current="page"] { opacity: 1; }
+.section-links { display: flex; min-width: 0; align-items: center; gap: clamp(10px, 2vw, 24px); overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+.section-links::-webkit-scrollbar { display: none; }
+.section-links a { flex: none; }
+.topbar { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+@media (max-width: 720px) {
+    .topbar { padding: 15px 10px; gap: 10px; }
+    .topbar a { font-size: 10px; }
+    .section-links { gap: 9px; }
+}
 </style>
 </head>
 <body>
+<nav class="topbar" aria-label="Page navigation">
+        <a href="index.html" aria-current="page">Home</a>
+        <div class="section-links"><a href="photography.html">Photography</a><a href="professional.html">Professional</a><a href="two-truths-one-lie.html">2 Truths 1 Lie</a><a href="lets-connect.html">Connect</a><a href="links.html">Links</a></div>
+    </nav>
 <main class="stage" aria-label="Jeff Jiang homepage"><div class="scene">
 <div class="hero"><h1 class="name" aria-label="Jeff Jiang" tabindex="0"><span class="name-line" aria-hidden="true"><span class="name-letter">J</span><span class="name-letter">e</span><span class="name-letter">f</span><span class="name-letter">f</span></span><span class="name-line" aria-hidden="true"><span class="name-letter">J</span><span class="name-letter">i</span><span class="name-letter">a</span><span class="name-letter">n</span><span class="name-letter">g</span></span></h1>
 <div class="portrait"><button class="grab" type="button" aria-label="Play with Jeff's portrait: click for a random expression or drag and release"><div class="face"><img src="assets/images/about-logo.png" alt="Jeff's smiling illustrated portrait" width="1254" height="1254" draggable="false"><svg class="eyes" viewBox="0 0 1254 1254" aria-hidden="true"><defs><radialGradient id="eye-paper"><stop offset="85%" stop-color="#fefefe"/><stop offset="100%" stop-color="#fefefe" stop-opacity="0"/></radialGradient></defs>
